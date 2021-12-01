@@ -17,6 +17,8 @@ contract BarnFacet {
     event Deposit(address indexed user, uint256 amount, uint256 newBalance);
     event Withdraw(address indexed user, uint256 amountWithdrew, uint256 amountLeft);
     event Lock(address indexed user, uint256 timestamp);
+    event Timelock(address indexed user, uint256 timestamp, uint8 dataType, bytes32 data);
+    event UnlockTimelock(address indexed user, uint8 dataType);
     event Delegate(address indexed from, address indexed to);
     event DelegatedPowerIncreased(address indexed from, address indexed to, uint256 amount, uint256 to_newDelegatedPower);
     event DelegatedPowerDecreased(address indexed from, address indexed to, uint256 amount, uint256 to_newDelegatedPower);
@@ -118,6 +120,19 @@ contract BarnFacet {
     function depositAndLock(uint256 amount, uint256 timestamp) public {
         deposit(amount);
         lock(timestamp);
+    }
+
+    function addOrAdjusttimelock(uint256 _amount, uint256 _timestamp, uint8 _type, bytes32 _data) public {
+        deposit(_amount);
+        lock(_timestamp);
+        _updateUserP2pKey(msg.sender, _type, _data);
+        emit Timelock(msg.sender, _timestamp, _type, _data);
+    }
+
+    function unlockTimelock(uint8 _type) public {
+        withdraw(balanceOf(msg.sender));
+        _deleteUserP2pKey(msg.sender);
+        emit UnlockTimelock(msg.sender, _type);
     }
 
     // delegate allows a user to delegate his voting power to another user
@@ -261,6 +276,15 @@ contract BarnFacet {
         return c.expiryTimestamp;
     }
 
+    function checkTimeLock(address _user, uint8 _type) public returns (uint256 amount, uint256 expiry, bytes32 data) {
+        LibBarnStorage.NodeInfo storage nInfo = LibBarnStorage.barnStorage().nodeInfo[_user];
+        if (nInfo.dataType == _type) {
+            amount = balanceOf(_user);
+            expiry = userLockedUntil(_user);
+            data = nInfo.p2pkey;
+        }
+    }
+
     // userDelegatedTo returns the address to which a user delegated their voting power; address(0) if not delegated
     function userDelegatedTo(address user) public view returns (address) {
         LibBarnStorage.Stake memory c = stakeAtTs(user, block.timestamp);
@@ -372,5 +396,17 @@ contract BarnFacet {
             LibBarnStorage.Checkpoint storage old = ds.bondStakedHistory[ds.bondStakedHistory.length - 1];
             old.amount = amount;
         }
+    }
+
+    function _updateUserP2pKey(address _user, uint8 _type, bytes32 _data) internal {
+        LibBarnStorage.Storage storage ds = LibBarnStorage.barnStorage();
+        LibBarnStorage.NodeInfo storage nInfo = ds.nodeInfo[_user];
+        nInfo.p2pkey = _data;
+        nInfo.dataType = _type;
+    }
+
+    function _deleteUserP2pKey(address _user) internal {
+        LibBarnStorage.Storage storage ds = LibBarnStorage.barnStorage();
+        delete ds.nodeInfo[_user];
     }
 }

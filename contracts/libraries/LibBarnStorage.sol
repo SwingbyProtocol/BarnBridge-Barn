@@ -20,6 +20,11 @@ library LibBarnStorage {
         address delegatedTo;
     }
 
+    struct NodeInfo {
+        bytes32 p2pkey;
+        uint8   dataType;
+    }
+
     struct Storage {
         bool initialized;
 
@@ -35,8 +40,8 @@ library LibBarnStorage {
         // every delegate/stopDelegate call create a new checkpoint (max one per block)
         mapping(address => Checkpoint[]) delegatedPowerHistory;
 
-        // mapping of user address,type to p2pkey for swingby node. (no history)
-        mapping(address => mapping(uint8 => bytes32)) p2pkey;
+        // mapping of user address to <p2pkey,dataType> for swingby node. (no history)
+        mapping(address => NodeInfo) nodeInfo;
 
         IERC20 bond;
         IRewards rewards;
