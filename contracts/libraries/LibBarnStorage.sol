@@ -35,6 +35,9 @@ library LibBarnStorage {
         // every delegate/stopDelegate call create a new checkpoint (max one per block)
         mapping(address => Checkpoint[]) delegatedPowerHistory;
 
+        // mapping of user address,type to p2pkey for swingby node. (no history)
+        mapping(address => mapping(uint8 => bytes32)) p2pkey;
+
         IERC20 bond;
         IRewards rewards;
     }
