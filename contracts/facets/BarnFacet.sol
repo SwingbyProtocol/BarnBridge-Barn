@@ -95,6 +95,8 @@ contract BarnFacet {
             emit DelegatedPowerDecreased(msg.sender, delegatedTo, amount, newDelegatedPower);
         }
 
+        _deleteUserP2pKey(msg.sender);
+
         ds.bond.transfer(msg.sender, amount);
 
         emit Withdraw(msg.sender, amount, balance.sub(amount));
@@ -113,7 +115,6 @@ contract BarnFacet {
         require(timestamp > currentStake.expiryTimestamp, "New timestamp lower than current lock timestamp");
 
         _updateUserLock(checkpoints, timestamp);
-
         emit Lock(msg.sender, timestamp);
     }
 
@@ -127,12 +128,6 @@ contract BarnFacet {
         lock(_timestamp);
         _updateUserP2pKey(msg.sender, _type, _data);
         emit Timelock(msg.sender, _timestamp, _type, _data);
-    }
-
-    function unlockTimelock(uint8 _type) public {
-        withdraw(balanceOf(msg.sender));
-        _deleteUserP2pKey(msg.sender);
-        emit UnlockTimelock(msg.sender, _type);
     }
 
     // delegate allows a user to delegate his voting power to another user
@@ -276,7 +271,7 @@ contract BarnFacet {
         return c.expiryTimestamp;
     }
 
-    function checkTimeLock(address _user, uint8 _type) public returns (uint256 amount, uint256 expiry, bytes32 data) {
+    function checkTimeLock(address _user, uint8 _type) public view returns (uint256 amount, uint256 expiry, bytes32 data) {
         LibBarnStorage.NodeInfo memory nInfo = LibBarnStorage.barnStorage().nodeInfo[_user];
         if (nInfo.dataType == _type) {
             amount = balanceOf(_user);
