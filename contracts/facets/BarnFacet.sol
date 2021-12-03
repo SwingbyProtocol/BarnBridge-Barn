@@ -277,7 +277,7 @@ contract BarnFacet {
     }
 
     function checkTimeLock(address _user, uint8 _type) public returns (uint256 amount, uint256 expiry, bytes32 data) {
-        LibBarnStorage.NodeInfo storage nInfo = LibBarnStorage.barnStorage().nodeInfo[_user];
+        LibBarnStorage.NodeInfo memory nInfo = LibBarnStorage.barnStorage().nodeInfo[_user];
         if (nInfo.dataType == _type) {
             amount = balanceOf(_user);
             expiry = userLockedUntil(_user);
