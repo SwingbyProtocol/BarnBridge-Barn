@@ -1,0 +1,277 @@
+{
+  "contractName": "IRewards",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "registerUserAction",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"registerUserAction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IRewards.sol\":\"IRewards\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IRewards.sol\":{\"keccak256\":\"0x512b14a9638f375f2d56892ae3ebe1d945813b3ff7f53907f39ffe2bafdaf1ec\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://1892995bb80829e92f383678ea44f8ad0f6135db4f3d05d0d367216600b1fb03\",\"dweb:/ipfs/QmPFFptLYP6TbuaJ1GHckA25gPhEzUd12S4wPmHv2Sup2M\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity 0.7.6;\npragma experimental ABIEncoderV2;\n\ninterface IRewards {\n    function registerUserAction(address user) external;\n}\n",
+  "sourcePath": "/mnt/c/pr0/SWINGBY/BARN/contracts/interfaces/IRewards.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IRewards.sol",
+    "exportedSymbols": {
+      "IRewards": [
+        4274
+      ]
+    },
+    "id": 4275,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4267,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:22:17"
+      },
+      {
+        "id": 4268,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "62:33:17"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 4274,
+        "linearizedBaseContracts": [
+          4274
+        ],
+        "name": "IRewards",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "functionSelector": "66a7d821",
+            "id": 4273,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerUserAction",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4271,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4270,
+                  "mutability": "mutable",
+                  "name": "user",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4273,
+                  "src": "150:12:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 4269,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "150:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "149:14:17"
+            },
+            "returnParameters": {
+              "id": 4272,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "172:0:17"
+            },
+            "scope": 4274,
+            "src": "122:51:17",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 4275,
+        "src": "97:78:17"
+      }
+    ],
+    "src": "39:137:17"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/interfaces/IRewards.sol",
+      "exportedSymbols": {
+        "IRewards": [
+          4274
+        ]
+      },
+      "license": "Apache-2.0"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".6"
+          ]
+        },
+        "id": 4267,
+        "name": "PragmaDirective",
+        "src": "39:22:17"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 4268,
+        "name": "PragmaDirective",
+        "src": "62:33:17"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            4274
+          ],
+          "name": "IRewards",
+          "scope": 4275
+        },
+        "children": [
+          {
+            "attributes": {
+              "functionSelector": "66a7d821",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "registerUserAction",
+              "scope": 4274,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "user",
+                      "scope": 4273,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 4269,
+                        "name": "ElementaryTypeName",
+                        "src": "150:7:17"
+                      }
+                    ],
+                    "id": 4270,
+                    "name": "VariableDeclaration",
+                    "src": "150:12:17"
+                  }
+                ],
+                "id": 4271,
+                "name": "ParameterList",
+                "src": "149:14:17"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 4272,
+                "name": "ParameterList",
+                "src": "172:0:17"
+              }
+            ],
+            "id": 4273,
+            "name": "FunctionDefinition",
+            "src": "122:51:17"
+          }
+        ],
+        "id": 4274,
+        "name": "ContractDefinition",
+        "src": "97:78:17"
+      }
+    ],
+    "id": 4275,
+    "name": "SourceUnit",
+    "src": "39:137:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-12-06T21:23:56.992Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

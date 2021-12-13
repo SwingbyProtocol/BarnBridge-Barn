@@ -38,7 +38,7 @@ const cfg: HardhatUserConfig = {
     abiExporter: {
         only: ['Barn', 'BarnFacet', 'OwnershipFacet', 'DiamondCutFacet', 'DiamondLoupeFacet', 'Rewards'],
         except: ['.*Mock$'],
-        clear: true,
+        clear: false,
         flat: true,
     },
 

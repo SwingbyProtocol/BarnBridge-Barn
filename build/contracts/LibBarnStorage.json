@@ -1,0 +1,1729 @@
+{
+  "contractName": "LibBarnStorage",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/libraries/LibBarnStorage.sol\":\"LibBarnStorage\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08\",\"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC\"]},\"project:/contracts/interfaces/IRewards.sol\":{\"keccak256\":\"0x512b14a9638f375f2d56892ae3ebe1d945813b3ff7f53907f39ffe2bafdaf1ec\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://1892995bb80829e92f383678ea44f8ad0f6135db4f3d05d0d367216600b1fb03\",\"dweb:/ipfs/QmPFFptLYP6TbuaJ1GHckA25gPhEzUd12S4wPmHv2Sup2M\"]},\"project:/contracts/libraries/LibBarnStorage.sol\":{\"keccak256\":\"0xad29570809dada9b1887980cc8d0fcf9cb16808838306fab176acada20b3401a\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://6aca5df57e21ca5412bfd8b0733ae311ecabc6a257a3261774957a7788b9596e\",\"dweb:/ipfs/QmcLK8B6tSsCj2jRGxPE2a91o5fLowkTQ1tjJQCYaFy6So\"]}},\"version\":1}",
+  "bytecode": "0x60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220b91a19d2f6255f826360bdd66008a168a0d7ab49956f07fcd33d80671c52cc5b64736f6c63430007060033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220b91a19d2f6255f826360bdd66008a168a0d7ab49956f07fcd33d80671c52cc5b64736f6c63430007060033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "192:1402:18:-:0;;;;;;;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "192:1402:18:-:0;;;;;;;;",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity 0.7.6;\npragma experimental ABIEncoderV2;\n\nimport \"@openzeppelin/contracts/token/ERC20/IERC20.sol\";\nimport \"../interfaces/IRewards.sol\";\n\nlibrary LibBarnStorage {\n    bytes32 constant STORAGE_POSITION = keccak256(\"com.barnbridge.barn.storage\");\n\n    struct Checkpoint {\n        uint256 timestamp;\n        uint256 amount;\n    }\n\n    struct Stake {\n        uint256 timestamp;\n        uint256 amount;\n        uint256 expiryTimestamp;\n        address delegatedTo;\n    }\n\n    struct NodeInfo {\n        bytes32 p2pkey;\n        uint8   dataType;\n    }\n\n    struct Storage {\n        bool initialized;\n\n        // mapping of user address to history of Stake objects\n        // every user action creates a new object in the history\n        mapping(address => Stake[]) userStakeHistory;\n\n        // array of bond staked Checkpoint\n        // deposits/withdrawals create a new object in the history (max one per block)\n        Checkpoint[] bondStakedHistory;\n\n        // mapping of user address to history of delegated power\n        // every delegate/stopDelegate call create a new checkpoint (max one per block)\n        mapping(address => Checkpoint[]) delegatedPowerHistory;\n\n        // mapping of user address to <p2pkey,dataType> for swingby node. (no history)\n        mapping(address => NodeInfo) nodeInfo;\n\n        IERC20 bond;\n        IRewards rewards;\n    }\n\n    function barnStorage() internal pure returns (Storage storage ds) {\n        bytes32 position = STORAGE_POSITION;\n        assembly {\n            ds.slot := position\n        }\n    }\n}\n",
+  "sourcePath": "/mnt/c/pr0/SWINGBY/BARN/contracts/libraries/LibBarnStorage.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/libraries/LibBarnStorage.sol",
+    "exportedSymbols": {
+      "IERC20": [
+        1045
+      ],
+      "IRewards": [
+        4274
+      ],
+      "LibBarnStorage": [
+        4339
+      ]
+    },
+    "id": 4340,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4276,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:22:18"
+      },
+      {
+        "id": 4277,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "62:33:18"
+      },
+      {
+        "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "id": 4278,
+        "nodeType": "ImportDirective",
+        "scope": 4340,
+        "sourceUnit": 1046,
+        "src": "97:56:18",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "project:/contracts/interfaces/IRewards.sol",
+        "file": "../interfaces/IRewards.sol",
+        "id": 4279,
+        "nodeType": "ImportDirective",
+        "scope": 4340,
+        "sourceUnit": 4275,
+        "src": "154:36:18",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "fullyImplemented": true,
+        "id": 4339,
+        "linearizedBaseContracts": [
+          4339
+        ],
+        "name": "LibBarnStorage",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 4284,
+            "mutability": "constant",
+            "name": "STORAGE_POSITION",
+            "nodeType": "VariableDeclaration",
+            "scope": 4339,
+            "src": "221:76:18",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 4280,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "221:7:18",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "arguments": [
+                {
+                  "hexValue": "636f6d2e6261726e6272696467652e6261726e2e73746f72616765",
+                  "id": 4282,
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "kind": "string",
+                  "lValueRequested": false,
+                  "nodeType": "Literal",
+                  "src": "267:29:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_stringliteral_e96c66e59227df98cba2247b26f0b557ed0f64708a0822054b1f9fc999420715",
+                    "typeString": "literal_string \"com.barnbridge.barn.storage\""
+                  },
+                  "value": "com.barnbridge.barn.storage"
+                }
+              ],
+              "expression": {
+                "argumentTypes": [
+                  {
+                    "typeIdentifier": "t_stringliteral_e96c66e59227df98cba2247b26f0b557ed0f64708a0822054b1f9fc999420715",
+                    "typeString": "literal_string \"com.barnbridge.barn.storage\""
+                  }
+                ],
+                "id": 4281,
+                "name": "keccak256",
+                "nodeType": "Identifier",
+                "overloadedDeclarations": [],
+                "referencedDeclaration": 4294967288,
+                "src": "257:9:18",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                  "typeString": "function (bytes memory) pure returns (bytes32)"
+                }
+              },
+              "id": 4283,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "functionCall",
+              "lValueRequested": false,
+              "names": [],
+              "nodeType": "FunctionCall",
+              "src": "257:40:18",
+              "tryCall": false,
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "canonicalName": "LibBarnStorage.Checkpoint",
+            "id": 4289,
+            "members": [
+              {
+                "constant": false,
+                "id": 4286,
+                "mutability": "mutable",
+                "name": "timestamp",
+                "nodeType": "VariableDeclaration",
+                "scope": 4289,
+                "src": "332:17:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4285,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "332:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4288,
+                "mutability": "mutable",
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 4289,
+                "src": "359:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4287,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "359:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Checkpoint",
+            "nodeType": "StructDefinition",
+            "scope": 4339,
+            "src": "304:76:18",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "LibBarnStorage.Stake",
+            "id": 4298,
+            "members": [
+              {
+                "constant": false,
+                "id": 4291,
+                "mutability": "mutable",
+                "name": "timestamp",
+                "nodeType": "VariableDeclaration",
+                "scope": 4298,
+                "src": "409:17:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4290,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "409:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4293,
+                "mutability": "mutable",
+                "name": "amount",
+                "nodeType": "VariableDeclaration",
+                "scope": 4298,
+                "src": "436:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4292,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "436:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4295,
+                "mutability": "mutable",
+                "name": "expiryTimestamp",
+                "nodeType": "VariableDeclaration",
+                "scope": 4298,
+                "src": "460:23:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 4294,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "460:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4297,
+                "mutability": "mutable",
+                "name": "delegatedTo",
+                "nodeType": "VariableDeclaration",
+                "scope": 4298,
+                "src": "493:19:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 4296,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "493:7:18",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Stake",
+            "nodeType": "StructDefinition",
+            "scope": 4339,
+            "src": "386:133:18",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "LibBarnStorage.NodeInfo",
+            "id": 4303,
+            "members": [
+              {
+                "constant": false,
+                "id": 4300,
+                "mutability": "mutable",
+                "name": "p2pkey",
+                "nodeType": "VariableDeclaration",
+                "scope": 4303,
+                "src": "551:14:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 4299,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "551:7:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4302,
+                "mutability": "mutable",
+                "name": "dataType",
+                "nodeType": "VariableDeclaration",
+                "scope": 4303,
+                "src": "575:16:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint8",
+                  "typeString": "uint8"
+                },
+                "typeName": {
+                  "id": 4301,
+                  "name": "uint8",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "575:5:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint8",
+                    "typeString": "uint8"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "NodeInfo",
+            "nodeType": "StructDefinition",
+            "scope": 4339,
+            "src": "525:73:18",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "LibBarnStorage.Storage",
+            "id": 4327,
+            "members": [
+              {
+                "constant": false,
+                "id": 4305,
+                "mutability": "mutable",
+                "name": "initialized",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "629:16:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 4304,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "629:4:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4310,
+                "mutability": "mutable",
+                "name": "userStakeHistory",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "784:44:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Stake_$4298_storage_$dyn_storage_$",
+                  "typeString": "mapping(address => struct LibBarnStorage.Stake[])"
+                },
+                "typeName": {
+                  "id": 4309,
+                  "keyType": {
+                    "id": 4306,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "792:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "784:27:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Stake_$4298_storage_$dyn_storage_$",
+                    "typeString": "mapping(address => struct LibBarnStorage.Stake[])"
+                  },
+                  "valueType": {
+                    "baseType": {
+                      "id": 4307,
+                      "name": "Stake",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 4298,
+                      "src": "803:5:18",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Stake_$4298_storage_ptr",
+                        "typeString": "struct LibBarnStorage.Stake"
+                      }
+                    },
+                    "id": 4308,
+                    "nodeType": "ArrayTypeName",
+                    "src": "803:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Stake_$4298_storage_$dyn_storage_ptr",
+                      "typeString": "struct LibBarnStorage.Stake[]"
+                    }
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4313,
+                "mutability": "mutable",
+                "name": "bondStakedHistory",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "969:30:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_struct$_Checkpoint_$4289_storage_$dyn_storage_ptr",
+                  "typeString": "struct LibBarnStorage.Checkpoint[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 4311,
+                    "name": "Checkpoint",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4289,
+                    "src": "969:10:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Checkpoint_$4289_storage_ptr",
+                      "typeString": "struct LibBarnStorage.Checkpoint"
+                    }
+                  },
+                  "id": 4312,
+                  "nodeType": "ArrayTypeName",
+                  "src": "969:12:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_struct$_Checkpoint_$4289_storage_$dyn_storage_ptr",
+                    "typeString": "struct LibBarnStorage.Checkpoint[]"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4318,
+                "mutability": "mutable",
+                "name": "delegatedPowerHistory",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "1163:54:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Checkpoint_$4289_storage_$dyn_storage_$",
+                  "typeString": "mapping(address => struct LibBarnStorage.Checkpoint[])"
+                },
+                "typeName": {
+                  "id": 4317,
+                  "keyType": {
+                    "id": 4314,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1171:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1163:32:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_array$_t_struct$_Checkpoint_$4289_storage_$dyn_storage_$",
+                    "typeString": "mapping(address => struct LibBarnStorage.Checkpoint[])"
+                  },
+                  "valueType": {
+                    "baseType": {
+                      "id": 4315,
+                      "name": "Checkpoint",
+                      "nodeType": "UserDefinedTypeName",
+                      "referencedDeclaration": 4289,
+                      "src": "1182:10:18",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Checkpoint_$4289_storage_ptr",
+                        "typeString": "struct LibBarnStorage.Checkpoint"
+                      }
+                    },
+                    "id": 4316,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1182:12:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_struct$_Checkpoint_$4289_storage_$dyn_storage_ptr",
+                      "typeString": "struct LibBarnStorage.Checkpoint[]"
+                    }
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4322,
+                "mutability": "mutable",
+                "name": "nodeInfo",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "1315:37:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_struct$_NodeInfo_$4303_storage_$",
+                  "typeString": "mapping(address => struct LibBarnStorage.NodeInfo)"
+                },
+                "typeName": {
+                  "id": 4321,
+                  "keyType": {
+                    "id": 4319,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1323:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1315:28:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_struct$_NodeInfo_$4303_storage_$",
+                    "typeString": "mapping(address => struct LibBarnStorage.NodeInfo)"
+                  },
+                  "valueType": {
+                    "id": 4320,
+                    "name": "NodeInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4303,
+                    "src": "1334:8:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_NodeInfo_$4303_storage_ptr",
+                      "typeString": "struct LibBarnStorage.NodeInfo"
+                    }
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4324,
+                "mutability": "mutable",
+                "name": "bond",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "1363:11:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_IERC20_$1045",
+                  "typeString": "contract IERC20"
+                },
+                "typeName": {
+                  "id": 4323,
+                  "name": "IERC20",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 1045,
+                  "src": "1363:6:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IERC20_$1045",
+                    "typeString": "contract IERC20"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 4326,
+                "mutability": "mutable",
+                "name": "rewards",
+                "nodeType": "VariableDeclaration",
+                "scope": 4327,
+                "src": "1384:16:18",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_contract$_IRewards_$4274",
+                  "typeString": "contract IRewards"
+                },
+                "typeName": {
+                  "id": 4325,
+                  "name": "IRewards",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 4274,
+                  "src": "1384:8:18",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IRewards_$4274",
+                    "typeString": "contract IRewards"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Storage",
+            "nodeType": "StructDefinition",
+            "scope": 4339,
+            "src": "604:803:18",
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 4337,
+              "nodeType": "Block",
+              "src": "1479:113:18",
+              "statements": [
+                {
+                  "assignments": [
+                    4333
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 4333,
+                      "mutability": "mutable",
+                      "name": "position",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 4337,
+                      "src": "1489:16:18",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 4332,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1489:7:18",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 4335,
+                  "initialValue": {
+                    "id": 4334,
+                    "name": "STORAGE_POSITION",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 4284,
+                    "src": "1508:16:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1489:35:18"
+                },
+                {
+                  "AST": {
+                    "nodeType": "YulBlock",
+                    "src": "1543:43:18",
+                    "statements": [
+                      {
+                        "nodeType": "YulAssignment",
+                        "src": "1557:19:18",
+                        "value": {
+                          "name": "position",
+                          "nodeType": "YulIdentifier",
+                          "src": "1568:8:18"
+                        },
+                        "variableNames": [
+                          {
+                            "name": "ds.slot",
+                            "nodeType": "YulIdentifier",
+                            "src": "1557:7:18"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "evmVersion": "istanbul",
+                  "externalReferences": [
+                    {
+                      "declaration": 4330,
+                      "isOffset": false,
+                      "isSlot": true,
+                      "src": "1557:7:18",
+                      "suffix": "slot",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 4333,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1568:8:18",
+                      "valueSize": 1
+                    }
+                  ],
+                  "id": 4336,
+                  "nodeType": "InlineAssembly",
+                  "src": "1534:52:18"
+                }
+              ]
+            },
+            "id": 4338,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "barnStorage",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4328,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1433:2:18"
+            },
+            "returnParameters": {
+              "id": 4331,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 4330,
+                  "mutability": "mutable",
+                  "name": "ds",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 4338,
+                  "src": "1459:18:18",
+                  "stateVariable": false,
+                  "storageLocation": "storage",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Storage_$4327_storage_ptr",
+                    "typeString": "struct LibBarnStorage.Storage"
+                  },
+                  "typeName": {
+                    "id": 4329,
+                    "name": "Storage",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 4327,
+                    "src": "1459:7:18",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Storage_$4327_storage_ptr",
+                      "typeString": "struct LibBarnStorage.Storage"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1458:20:18"
+            },
+            "scope": 4339,
+            "src": "1413:179:18",
+            "stateMutability": "pure",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 4340,
+        "src": "192:1402:18"
+      }
+    ],
+    "src": "39:1556:18"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/libraries/LibBarnStorage.sol",
+      "exportedSymbols": {
+        "IERC20": [
+          1045
+        ],
+        "IRewards": [
+          4274
+        ],
+        "LibBarnStorage": [
+          4339
+        ]
+      },
+      "license": "Apache-2.0"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".6"
+          ]
+        },
+        "id": 4276,
+        "name": "PragmaDirective",
+        "src": "39:22:18"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 4277,
+        "name": "PragmaDirective",
+        "src": "62:33:18"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1046,
+          "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+          "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+          "scope": 4340,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4278,
+        "name": "ImportDirective",
+        "src": "97:56:18"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 4275,
+          "absolutePath": "project:/contracts/interfaces/IRewards.sol",
+          "file": "../interfaces/IRewards.sol",
+          "scope": 4340,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 4279,
+        "name": "ImportDirective",
+        "src": "154:36:18"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "library",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            4339
+          ],
+          "name": "LibBarnStorage",
+          "scope": 4340
+        },
+        "children": [
+          {
+            "attributes": {
+              "constant": true,
+              "mutability": "constant",
+              "name": "STORAGE_POSITION",
+              "scope": 4339,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "bytes32",
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "bytes32",
+                  "type": "bytes32"
+                },
+                "id": 4280,
+                "name": "ElementaryTypeName",
+                "src": "221:7:18"
+              },
+              {
+                "attributes": {
+                  "isConstant": false,
+                  "isLValue": false,
+                  "isPure": true,
+                  "isStructConstructorCall": false,
+                  "lValueRequested": false,
+                  "names": [
+                    null
+                  ],
+                  "tryCall": false,
+                  "type": "bytes32",
+                  "type_conversion": false
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_stringliteral_e96c66e59227df98cba2247b26f0b557ed0f64708a0822054b1f9fc999420715",
+                          "typeString": "literal_string \"com.barnbridge.barn.storage\""
+                        }
+                      ],
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 4294967288,
+                      "type": "function (bytes memory) pure returns (bytes32)",
+                      "value": "keccak256"
+                    },
+                    "id": 4281,
+                    "name": "Identifier",
+                    "src": "257:9:18"
+                  },
+                  {
+                    "attributes": {
+                      "hexvalue": "636f6d2e6261726e6272696467652e6261726e2e73746f72616765",
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "token": "string",
+                      "type": "literal_string \"com.barnbridge.barn.storage\"",
+                      "value": "com.barnbridge.barn.storage"
+                    },
+                    "id": 4282,
+                    "name": "Literal",
+                    "src": "267:29:18"
+                  }
+                ],
+                "id": 4283,
+                "name": "FunctionCall",
+                "src": "257:40:18"
+              }
+            ],
+            "id": 4284,
+            "name": "VariableDeclaration",
+            "src": "221:76:18"
+          },
+          {
+            "attributes": {
+              "canonicalName": "LibBarnStorage.Checkpoint",
+              "name": "Checkpoint",
+              "scope": 4339,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "scope": 4289,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4285,
+                    "name": "ElementaryTypeName",
+                    "src": "332:7:18"
+                  }
+                ],
+                "id": 4286,
+                "name": "VariableDeclaration",
+                "src": "332:17:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "scope": 4289,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4287,
+                    "name": "ElementaryTypeName",
+                    "src": "359:7:18"
+                  }
+                ],
+                "id": 4288,
+                "name": "VariableDeclaration",
+                "src": "359:14:18"
+              }
+            ],
+            "id": 4289,
+            "name": "StructDefinition",
+            "src": "304:76:18"
+          },
+          {
+            "attributes": {
+              "canonicalName": "LibBarnStorage.Stake",
+              "name": "Stake",
+              "scope": 4339,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "timestamp",
+                  "scope": 4298,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4290,
+                    "name": "ElementaryTypeName",
+                    "src": "409:7:18"
+                  }
+                ],
+                "id": 4291,
+                "name": "VariableDeclaration",
+                "src": "409:17:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "scope": 4298,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4292,
+                    "name": "ElementaryTypeName",
+                    "src": "436:7:18"
+                  }
+                ],
+                "id": 4293,
+                "name": "VariableDeclaration",
+                "src": "436:14:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "expiryTimestamp",
+                  "scope": 4298,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 4294,
+                    "name": "ElementaryTypeName",
+                    "src": "460:7:18"
+                  }
+                ],
+                "id": 4295,
+                "name": "VariableDeclaration",
+                "src": "460:23:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "delegatedTo",
+                  "scope": 4298,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 4296,
+                    "name": "ElementaryTypeName",
+                    "src": "493:7:18"
+                  }
+                ],
+                "id": 4297,
+                "name": "VariableDeclaration",
+                "src": "493:19:18"
+              }
+            ],
+            "id": 4298,
+            "name": "StructDefinition",
+            "src": "386:133:18"
+          },
+          {
+            "attributes": {
+              "canonicalName": "LibBarnStorage.NodeInfo",
+              "name": "NodeInfo",
+              "scope": 4339,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "p2pkey",
+                  "scope": 4303,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bytes32",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bytes32",
+                      "type": "bytes32"
+                    },
+                    "id": 4299,
+                    "name": "ElementaryTypeName",
+                    "src": "551:7:18"
+                  }
+                ],
+                "id": 4300,
+                "name": "VariableDeclaration",
+                "src": "551:14:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "dataType",
+                  "scope": 4303,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint8",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint8",
+                      "type": "uint8"
+                    },
+                    "id": 4301,
+                    "name": "ElementaryTypeName",
+                    "src": "575:5:18"
+                  }
+                ],
+                "id": 4302,
+                "name": "VariableDeclaration",
+                "src": "575:16:18"
+              }
+            ],
+            "id": 4303,
+            "name": "StructDefinition",
+            "src": "525:73:18"
+          },
+          {
+            "attributes": {
+              "canonicalName": "LibBarnStorage.Storage",
+              "name": "Storage",
+              "scope": 4339,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "initialized",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "bool",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "bool",
+                      "type": "bool"
+                    },
+                    "id": 4304,
+                    "name": "ElementaryTypeName",
+                    "src": "629:4:18"
+                  }
+                ],
+                "id": 4305,
+                "name": "VariableDeclaration",
+                "src": "629:16:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "userStakeHistory",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "mapping(address => struct LibBarnStorage.Stake[])",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "mapping(address => struct LibBarnStorage.Stake[])"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 4306,
+                        "name": "ElementaryTypeName",
+                        "src": "792:7:18"
+                      },
+                      {
+                        "attributes": {
+                          "type": "struct LibBarnStorage.Stake[]"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "Stake",
+                              "referencedDeclaration": 4298,
+                              "type": "struct LibBarnStorage.Stake"
+                            },
+                            "id": 4307,
+                            "name": "UserDefinedTypeName",
+                            "src": "803:5:18"
+                          }
+                        ],
+                        "id": 4308,
+                        "name": "ArrayTypeName",
+                        "src": "803:7:18"
+                      }
+                    ],
+                    "id": 4309,
+                    "name": "Mapping",
+                    "src": "784:27:18"
+                  }
+                ],
+                "id": 4310,
+                "name": "VariableDeclaration",
+                "src": "784:44:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "bondStakedHistory",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "struct LibBarnStorage.Checkpoint[]",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "struct LibBarnStorage.Checkpoint[]"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "Checkpoint",
+                          "referencedDeclaration": 4289,
+                          "type": "struct LibBarnStorage.Checkpoint"
+                        },
+                        "id": 4311,
+                        "name": "UserDefinedTypeName",
+                        "src": "969:10:18"
+                      }
+                    ],
+                    "id": 4312,
+                    "name": "ArrayTypeName",
+                    "src": "969:12:18"
+                  }
+                ],
+                "id": 4313,
+                "name": "VariableDeclaration",
+                "src": "969:30:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "delegatedPowerHistory",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "mapping(address => struct LibBarnStorage.Checkpoint[])",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "mapping(address => struct LibBarnStorage.Checkpoint[])"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 4314,
+                        "name": "ElementaryTypeName",
+                        "src": "1171:7:18"
+                      },
+                      {
+                        "attributes": {
+                          "type": "struct LibBarnStorage.Checkpoint[]"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "Checkpoint",
+                              "referencedDeclaration": 4289,
+                              "type": "struct LibBarnStorage.Checkpoint"
+                            },
+                            "id": 4315,
+                            "name": "UserDefinedTypeName",
+                            "src": "1182:10:18"
+                          }
+                        ],
+                        "id": 4316,
+                        "name": "ArrayTypeName",
+                        "src": "1182:12:18"
+                      }
+                    ],
+                    "id": 4317,
+                    "name": "Mapping",
+                    "src": "1163:32:18"
+                  }
+                ],
+                "id": 4318,
+                "name": "VariableDeclaration",
+                "src": "1163:54:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "nodeInfo",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "mapping(address => struct LibBarnStorage.NodeInfo)",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "type": "mapping(address => struct LibBarnStorage.NodeInfo)"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 4319,
+                        "name": "ElementaryTypeName",
+                        "src": "1323:7:18"
+                      },
+                      {
+                        "attributes": {
+                          "name": "NodeInfo",
+                          "referencedDeclaration": 4303,
+                          "type": "struct LibBarnStorage.NodeInfo"
+                        },
+                        "id": 4320,
+                        "name": "UserDefinedTypeName",
+                        "src": "1334:8:18"
+                      }
+                    ],
+                    "id": 4321,
+                    "name": "Mapping",
+                    "src": "1315:28:18"
+                  }
+                ],
+                "id": 4322,
+                "name": "VariableDeclaration",
+                "src": "1315:37:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "bond",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "contract IERC20",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "IERC20",
+                      "referencedDeclaration": 1045,
+                      "type": "contract IERC20"
+                    },
+                    "id": 4323,
+                    "name": "UserDefinedTypeName",
+                    "src": "1363:6:18"
+                  }
+                ],
+                "id": 4324,
+                "name": "VariableDeclaration",
+                "src": "1363:11:18"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "rewards",
+                  "scope": 4327,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "contract IRewards",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "IRewards",
+                      "referencedDeclaration": 4274,
+                      "type": "contract IRewards"
+                    },
+                    "id": 4325,
+                    "name": "UserDefinedTypeName",
+                    "src": "1384:8:18"
+                  }
+                ],
+                "id": 4326,
+                "name": "VariableDeclaration",
+                "src": "1384:16:18"
+              }
+            ],
+            "id": 4327,
+            "name": "StructDefinition",
+            "src": "604:803:18"
+          },
+          {
+            "attributes": {
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "barnStorage",
+              "scope": 4339,
+              "stateMutability": "pure",
+              "virtual": false,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 4328,
+                "name": "ParameterList",
+                "src": "1433:2:18"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "ds",
+                      "scope": 4338,
+                      "stateVariable": false,
+                      "storageLocation": "storage",
+                      "type": "struct LibBarnStorage.Storage",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "Storage",
+                          "referencedDeclaration": 4327,
+                          "type": "struct LibBarnStorage.Storage"
+                        },
+                        "id": 4329,
+                        "name": "UserDefinedTypeName",
+                        "src": "1459:7:18"
+                      }
+                    ],
+                    "id": 4330,
+                    "name": "VariableDeclaration",
+                    "src": "1459:18:18"
+                  }
+                ],
+                "id": 4331,
+                "name": "ParameterList",
+                "src": "1458:20:18"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        4333
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "mutability": "mutable",
+                          "name": "position",
+                          "scope": 4337,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "bytes32",
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "bytes32",
+                              "type": "bytes32"
+                            },
+                            "id": 4332,
+                            "name": "ElementaryTypeName",
+                            "src": "1489:7:18"
+                          }
+                        ],
+                        "id": 4333,
+                        "name": "VariableDeclaration",
+                        "src": "1489:16:18"
+                      },
+                      {
+                        "attributes": {
+                          "overloadedDeclarations": [
+                            null
+                          ],
+                          "referencedDeclaration": 4284,
+                          "type": "bytes32",
+                          "value": "STORAGE_POSITION"
+                        },
+                        "id": 4334,
+                        "name": "Identifier",
+                        "src": "1508:16:18"
+                      }
+                    ],
+                    "id": 4335,
+                    "name": "VariableDeclarationStatement",
+                    "src": "1489:35:18"
+                  },
+                  {
+                    "attributes": {
+                      "evmVersion": "istanbul",
+                      "externalReferences": [
+                        {
+                          "declaration": 4330,
+                          "isOffset": false,
+                          "isSlot": true,
+                          "src": "1557:7:18",
+                          "suffix": "slot",
+                          "valueSize": 1
+                        },
+                        {
+                          "declaration": 4333,
+                          "isOffset": false,
+                          "isSlot": false,
+                          "src": "1568:8:18",
+                          "valueSize": 1
+                        }
+                      ],
+                      "operations": "{ ds.slot := position }"
+                    },
+                    "children": [],
+                    "id": 4336,
+                    "name": "InlineAssembly",
+                    "src": "1534:52:18"
+                  }
+                ],
+                "id": 4337,
+                "name": "Block",
+                "src": "1479:113:18"
+              }
+            ],
+            "id": 4338,
+            "name": "FunctionDefinition",
+            "src": "1413:179:18"
+          }
+        ],
+        "id": 4339,
+        "name": "ContractDefinition",
+        "src": "192:1402:18"
+      }
+    ],
+    "id": 4340,
+    "name": "SourceUnit",
+    "src": "39:1556:18"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-12-06T21:23:56.998Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "contractName": "Test2Facet",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "test1Func1",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"test1Func1\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/mocks/Test2Facet.sol\":\"Test2Facet\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/mocks/Test2Facet.sol\":{\"keccak256\":\"0x5bac9b0d1cc12942aa9bffe0f56622b4b03f82aa930d497c7ff4d8410a3974d5\",\"license\":\"Apache-2.0\",\"urls\":[\"bzz-raw://eb452f68e2f79c22b166dd53687ebe663b824c1c5f67a13952e99c6e2909269c\",\"dweb:/ipfs/QmPBKHRZhKqd865BaF1B1KvYnvZXMMxMgXfyoJ4PCexysp\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b5060818061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c806319e3b53314602d575b600080fd5b60336045565b60408051918252519081900360200190f35b6104d29056fea2646970667358221220e101a2d6b1f5406a46e4b065397ea14dcb9091c3750948ce630fcd68182c7ff064736f6c63430007060033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c806319e3b53314602d575b600080fd5b60336045565b60408051918252519081900360200190f35b6104d29056fea2646970667358221220e101a2d6b1f5406a46e4b065397ea14dcb9091c3750948ce630fcd68182c7ff064736f6c63430007060033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "63:110:27:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "63:110:27:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;89:82;;;:::i;:::-;;;;;;;;;;;;;;;;;160:4;89:82;:::o",
+  "source": "// SPDX-License-Identifier: Apache-2.0\npragma solidity 0.7.6;\n\ncontract Test2Facet {\n    function test1Func1() external view returns (uint256) {\n        return 1234;\n    }\n}\n",
+  "sourcePath": "/mnt/c/pr0/SWINGBY/BARN/contracts/mocks/Test2Facet.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/mocks/Test2Facet.sol",
+    "exportedSymbols": {
+      "Test2Facet": [
+        5479
+      ]
+    },
+    "id": 5480,
+    "license": "Apache-2.0",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5470,
+        "literals": [
+          "solidity",
+          "0.7",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "39:22:27"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 5479,
+        "linearizedBaseContracts": [
+          5479
+        ],
+        "name": "Test2Facet",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5477,
+              "nodeType": "Block",
+              "src": "143:28:27",
+              "statements": [
+                {
+                  "expression": {
+                    "hexValue": "31323334",
+                    "id": 5475,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "160:4:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_rational_1234_by_1",
+                      "typeString": "int_const 1234"
+                    },
+                    "value": "1234"
+                  },
+                  "functionReturnParameters": 5474,
+                  "id": 5476,
+                  "nodeType": "Return",
+                  "src": "153:11:27"
+                }
+              ]
+            },
+            "functionSelector": "19e3b533",
+            "id": 5478,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "test1Func1",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5471,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "108:2:27"
+            },
+            "returnParameters": {
+              "id": 5474,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5473,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5478,
+                  "src": "134:7:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 5472,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "134:7:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "133:9:27"
+            },
+            "scope": 5479,
+            "src": "89:82:27",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 5480,
+        "src": "63:110:27"
+      }
+    ],
+    "src": "39:135:27"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "project:/contracts/mocks/Test2Facet.sol",
+      "exportedSymbols": {
+        "Test2Facet": [
+          5479
+        ]
+      },
+      "license": "Apache-2.0"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.7",
+            ".6"
+          ]
+        },
+        "id": 5470,
+        "name": "PragmaDirective",
+        "src": "39:22:27"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            5479
+          ],
+          "name": "Test2Facet",
+          "scope": 5480
+        },
+        "children": [
+          {
+            "attributes": {
+              "functionSelector": "19e3b533",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "test1Func1",
+              "scope": 5479,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 5471,
+                "name": "ParameterList",
+                "src": "108:2:27"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "",
+                      "scope": 5478,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 5472,
+                        "name": "ElementaryTypeName",
+                        "src": "134:7:27"
+                      }
+                    ],
+                    "id": 5473,
+                    "name": "VariableDeclaration",
+                    "src": "134:7:27"
+                  }
+                ],
+                "id": 5474,
+                "name": "ParameterList",
+                "src": "133:9:27"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 5474
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "hexvalue": "31323334",
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "lValueRequested": false,
+                          "token": "number",
+                          "type": "int_const 1234",
+                          "value": "1234"
+                        },
+                        "id": 5475,
+                        "name": "Literal",
+                        "src": "160:4:27"
+                      }
+                    ],
+                    "id": 5476,
+                    "name": "Return",
+                    "src": "153:11:27"
+                  }
+                ],
+                "id": 5477,
+                "name": "Block",
+                "src": "143:28:27"
+              }
+            ],
+            "id": 5478,
+            "name": "FunctionDefinition",
+            "src": "89:82:27"
+          }
+        ],
+        "id": 5479,
+        "name": "ContractDefinition",
+        "src": "63:110:27"
+      }
+    ],
+    "id": 5480,
+    "name": "SourceUnit",
+    "src": "39:135:27"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-12-06T21:23:57.067Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

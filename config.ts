@@ -30,6 +30,12 @@ export const networks: NetworksUserConfig = {
         gas: "auto",
         gasPrice: 50000000000,
         gasMultiplier: 1.5
+    },
+    ropsten: {
+        url: "https://eth-ropsten.alchemyapi.io/v2/5EGdI7OUE9ptMFggrLzsM2dDpBYPMujp",
+        chainId: 3,       // Ropsten's id
+        gas: 5500000,        // Ropsten has a lower block limit than mainnet
+        gasPrice: 53000000000
     }
 };
 

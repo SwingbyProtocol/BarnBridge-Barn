@@ -4,7 +4,7 @@ import { BarnFacet, Rewards } from '../typechain';
 import { BigNumber } from 'ethers';
 import * as helpers from '../test/helpers/helpers';
 
-const _owner = '0x89d652C64d7CeE18F5DF53B24d9D29D130b18798';
+const _owner = '0x50818e936aB61377A18bCAEc0f1C32cA27E38923' //'0x89d652C64d7CeE18F5DF53B24d9D29D130b18798';
 const _bond = '0x0391D2021f89DC339F60Fff84546EA23E337750f';
 
 // needed for rewards setup
