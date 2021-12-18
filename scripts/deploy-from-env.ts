@@ -4,6 +4,8 @@ import { BarnFacet, Rewards } from '../typechain';
 import { BigNumber } from 'ethers';
 import * as helpers from '../test/helpers/helpers';
 require('dotenv').config();
+import { ethers } from 'hardhat';
+
 
 const _owner = process.env.OWNER;
 const _bond = process.env.BOND;
@@ -11,10 +13,14 @@ const _bond = process.env.BOND;
 // needed for rewards setup
 const _cv = process.env.CV;
 const startTs = process.env.STARTTS;
+// ENDTS must be 1 year later from STARTTS
 const endTs = process.env.ENDTS;
-const rewardsAmount = BigNumber.from(process.env.REWARDSAMOUNT).mul(helpers.tenPow18);
+// disabled because amount is changed dynamically.
+// const rewardsAmount = BigNumber.from(process.env.REWARDSAMOUNT).mul(helpers.tenPow18);
 
 async function main () {
+    const [owner] = await ethers.getSigners();
+    console.log(owner.address)
     const cutFacet = await deploy.deployContract('DiamondCutFacet');
     console.log(`DiamondCutFacet deployed to: ${cutFacet.address}`);
 
@@ -44,7 +50,8 @@ async function main () {
     const barn = (await diamondAsFacet(diamond, 'BarnFacet')) as BarnFacet;
     await barn.initBarn(_bond, rewards.address);
 
-    await rewards.setupPullToken(_cv, startTs, endTs, rewardsAmount);
+    //await rewards.setupPullToken(_cv, startTs, endTs, rewardsAmount);
+    await rewards.setupPullToken(_cv, startTs, endTs);
 }
 
 main()

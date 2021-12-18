@@ -10,19 +10,19 @@ import "./interfaces/IBarn.sol";
 contract Rewards is Ownable {
     using SafeMath for uint256;
 
-    uint256 constant decimals = 10 ** 18;
+    uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
 
     struct Pull {
         address source;
         uint256 startTs;
         uint256 endTs;
         uint256 totalDuration;
-        uint256 totalAmount;
     }
 
     Pull public pullFeature;
     bool public disabled;
     uint256 public lastPullTs;
+    uint256 public apy;
 
     uint256 public balanceBefore;
     uint256 public currentMultiplier;
@@ -35,14 +35,15 @@ contract Rewards is Ownable {
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _token, address _barn) {
-        require(_token != address(0), "reward token must not be 0x0");
+    constructor(address _owner, address _swingby, address _barn, uint256 _apy) {
+        require(_swingby != address(0), "reward token must not be 0x0");
         require(_barn != address(0), "barn address must not be 0x0");
 
         transferOwnership(_owner);
 
-        rewardToken = IERC20(_token);
+        rewardToken = IERC20(_swingby);
         barn = IBarn(_barn);
+        apy = _apy;
     }
 
     // registerUserAction is called by the Barn every time the user does a deposit or withdrawal in order to
@@ -100,7 +101,7 @@ contract Rewards is Ownable {
 
     // setupPullToken is used to setup the rewards system; only callable by contract owner
     // set source to address(0) to disable the functionality
-    function setupPullToken(address source, uint256 startTs, uint256 endTs, uint256 amount) public {
+    function setupPullToken(address source, uint256 startTs, uint256 endTs) public {
         require(msg.sender == owner(), "!owner");
         require(!disabled, "contract is disabled");
 
@@ -114,17 +115,15 @@ contract Rewards is Ownable {
         if (source == address(0)) {
             require(startTs == 0, "disable contract: startTs must be 0");
             require(endTs == 0, "disable contract: endTs must be 0");
-            require(amount == 0, "disable contract: amount must be 0");
         } else {
             require(endTs > startTs, "setup contract: endTs must be greater than startTs");
-            require(amount > 0, "setup contract: amount must be greater than 0");
         }
 
         pullFeature.source = source;
         pullFeature.startTs = startTs;
         pullFeature.endTs = endTs;
+        // duration must be 1Y always. (For calculate SWINGBY APY)
         pullFeature.totalDuration = endTs.sub(startTs);
-        pullFeature.totalAmount = amount;
 
         if (lastPullTs < startTs) {
             lastPullTs = startTs;
@@ -137,6 +136,17 @@ contract Rewards is Ownable {
         require(msg.sender == owner(), '!owner');
 
         barn = IBarn(_barn);
+    }
+
+    function setNewAPY(uint256 _apy) public {
+        require(msg.sender == owner(), "!owner");
+        apy = _apy;
+        if (apy == 0) {
+            // send all remain tokens to owner (expected governance contract.)
+            uint256 amountToPull = rewardToken.balanceOf(address(pullFeature.source));
+            rewardToken.transferFrom(pullFeature.source, address(this), amountToPull);
+            rewardToken.transfer(owner(), amountToPull);
+        }
     }
 
     // _pullToken calculates the amount based on the time passed since the last pull relative
@@ -160,8 +170,15 @@ contract Rewards is Ownable {
         }
 
         uint256 timeSinceLastPull = timestampCap.sub(lastPullTs);
+        // extends pullFeature.totalDuration
+        pullFeature.totalDuration = pullFeature.totalDuration.add(timeSinceLastPull);
+
+        uint256 totalStakedBond = barn.bondStaked();
+        // use required amount instead of pullFeature.totalAmount for calculate SWINGBY static APY for stakers
+        uint256 requiredAmountFor1Y = totalStakedBond.mul(apy).div(100);
+
         uint256 shareToPull = timeSinceLastPull.mul(decimals).div(pullFeature.totalDuration);
-        uint256 amountToPull = pullFeature.totalAmount.mul(shareToPull).div(decimals);
+        uint256 amountToPull = requiredAmountFor1Y.mul(shareToPull).div(decimals);
 
         lastPullTs = block.timestamp;
         rewardToken.transferFrom(pullFeature.source, address(this), amountToPull);

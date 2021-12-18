@@ -4,4 +4,6 @@ pragma experimental ABIEncoderV2;
 
 interface IRewards {
     function registerUserAction(address user) external;
+
+    function setNewAPY(uint256 _apy) external;
 }
