@@ -11,7 +11,7 @@ contract Rewards is Ownable {
     using SafeMath for uint256;
 
     uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
-
+    uint256 constant oneYear = 31536000;
     struct Pull {
         address source;
         uint256 startTs;
@@ -105,6 +105,8 @@ contract Rewards is Ownable {
         require(msg.sender == owner(), "!owner");
         require(!disabled, "contract is disabled");
 
+        require(endTs.sub(startTs) == oneYear, "endTs.sub(startTs) != 1year");
+
         if (pullFeature.source != address(0)) {
             require(source == address(0), "contract is already set up, source must be 0x0");
             disabled = true;
@@ -118,7 +120,6 @@ contract Rewards is Ownable {
         } else {
             require(endTs > startTs, "setup contract: endTs must be greater than startTs");
         }
-
         pullFeature.source = source;
         pullFeature.startTs = startTs;
         pullFeature.endTs = endTs;
@@ -144,8 +145,7 @@ contract Rewards is Ownable {
         if (apy == 0) {
             // send all remain tokens to owner (expected governance contract.)
             uint256 amountToPull = rewardToken.balanceOf(address(pullFeature.source));
-            rewardToken.transferFrom(pullFeature.source, address(this), amountToPull);
-            rewardToken.transfer(owner(), amountToPull);
+            rewardToken.transferFrom(pullFeature.source, owner(), amountToPull);
         }
     }
 
