@@ -22,7 +22,7 @@ contract Rewards is Ownable {
     Pull public pullFeature;
     bool public disabled;
     uint256 public lastPullTs;
-    uint256 public apy;
+    uint256 public apr;
 
     uint256 public balanceBefore;
     uint256 public currentMultiplier;
@@ -35,7 +35,7 @@ contract Rewards is Ownable {
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _swingby, address _barn, uint256 _apy) {
+    constructor(address _owner, address _swingby, address _barn, uint256 _apr) {
         require(_swingby != address(0), "reward token must not be 0x0");
         require(_barn != address(0), "barn address must not be 0x0");
 
@@ -43,7 +43,7 @@ contract Rewards is Ownable {
 
         rewardToken = IERC20(_swingby);
         barn = IBarn(_barn);
-        apy = _apy;
+        apr = _apr;
     }
 
     // registerUserAction is called by the Barn every time the user does a deposit or withdrawal in order to
@@ -139,10 +139,10 @@ contract Rewards is Ownable {
         barn = IBarn(_barn);
     }
 
-    function setNewAPY(uint256 _apy) public {
+    function setNewAPR(uint256 _apr) public {
         require(msg.sender == owner(), "!owner");
-        apy = _apy;
-        if (apy == 0) {
+        apr = _apr;
+        if (apr == 0) {
             // send all remain tokens to owner (expected governance contract.)
             uint256 amountToPull = rewardToken.balanceOf(address(pullFeature.source));
             rewardToken.transferFrom(pullFeature.source, owner(), amountToPull);
@@ -175,7 +175,7 @@ contract Rewards is Ownable {
 
         uint256 totalStakedBond = barn.bondStaked();
         // use required amount instead of pullFeature.totalAmount for calculate SWINGBY static APY for stakers
-        uint256 requiredAmountFor1Y = totalStakedBond.mul(apy).div(100);
+        uint256 requiredAmountFor1Y = totalStakedBond.mul(apr).div(100);
 
         uint256 shareToPull = timeSinceLastPull.mul(decimals).div(pullFeature.totalDuration);
         uint256 amountToPull = requiredAmountFor1Y.mul(shareToPull).div(decimals);
