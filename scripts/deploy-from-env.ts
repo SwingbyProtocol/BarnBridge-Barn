@@ -9,7 +9,7 @@ import { ethers } from 'hardhat';
 
 const _owner = process.env.OWNER;
 const _bond = process.env.BOND;
-
+const _apr = 15;
 // needed for rewards setup
 const _cv = process.env.CV;
 const startTs = process.env.STARTTS;
@@ -43,7 +43,7 @@ async function main () {
     );
     console.log(`Barn deployed at: ${diamond.address}`);
 
-    const rewards = (await deploy.deployContract('Rewards', [_owner, _bond, diamond.address])) as Rewards;
+    const rewards = (await deploy.deployContract('Rewards', [_owner, _bond, diamond.address, _apr])) as Rewards;
     console.log(`Rewards deployed at: ${rewards.address}`);
 
     console.log('Calling initBarn');
