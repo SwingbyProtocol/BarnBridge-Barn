@@ -14,10 +14,10 @@ const _apr = 15;
 const _cv = process.env.CV;
 const startTs = process.env.STARTTS;
 // ENDTS must be 1 year later from STARTTS
-const endTs = process.env.ENDTS;
+const endTs = process.env.ENDTS
 // disabled because amount is changed dynamically.
 // const rewardsAmount = BigNumber.from(process.env.REWARDSAMOUNT).mul(helpers.tenPow18);
-
+console.log(startTs, endTs)
 async function main () {
     const [owner] = await ethers.getSigners();
     console.log(owner.address)
