@@ -18,7 +18,7 @@ export const networks: NetworksUserConfig = {
             count: 10
         },
         gas: "auto",
-        gasPrice: 1000000000, // 1 gwei
+        gasPrice: 50000000000, // 50 gwei
         gasMultiplier: 1.5
     },
 
