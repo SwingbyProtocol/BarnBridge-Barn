@@ -6,6 +6,7 @@ import 'hardhat-abi-exporter';
 import 'hardhat-typechain';
 import 'solidity-coverage';
 import 'hardhat-gas-reporter';
+require('dotenv').config();
 
 // This is a sample Buidler task. To learn how to create your own go to
 // https://buidler.dev/guides/create-task.html

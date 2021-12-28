@@ -21,6 +21,9 @@ export async function deployDiamond (diamondArtifactName: string, facets: Array<
         ]);
     }
 
+    console.log("Use below args as constructor args for BARN")
+    console.log(diamondCut)
+
     const diamondFactory: ContractFactory = await ethers.getContractFactory(diamondArtifactName);
     const deployedDiamond: Contract = await diamondFactory.deploy(diamondCut, owner);
     await deployedDiamond.deployed();

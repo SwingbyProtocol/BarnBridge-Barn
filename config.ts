@@ -1,6 +1,12 @@
-import 'dotenv/config';
+//import 'dotenv/config';
+//import * as dotenv from "dotenv";
+require('dotenv').config();
+
 import { NetworksUserConfig } from "hardhat/types";
 import { EtherscanConfig } from "@nomiclabs/hardhat-etherscan/dist/src/types";
+
+const key = process.env.PRIVATE_KEY
+
 
 export const networks: NetworksUserConfig = {
     // Needed for `solidity-coverage`
@@ -32,7 +38,8 @@ export const networks: NetworksUserConfig = {
         gasMultiplier: 1.5
     },
     ropsten: {
-        url: "https://eth-ropsten.alchemyapi.io/v2/5EGdI7OUE9ptMFggrLzsM2dDpBYPMujp",
+        url: process.env.PROVIDER,
+        accounts: [key!],
         chainId: 3,       // Ropsten's id
         gas: 5500000,        // Ropsten has a lower block limit than mainnet
         gasPrice: 53000000000

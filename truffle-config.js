@@ -18,7 +18,7 @@
  *
  */
  require('dotenv').config();
- const mnemonic = [process.env.PRIVATE_KEYS] || "not found"
+ const mnemonic = [process.env.PRIVATE_KEY] || "not found"
  console.log(mnemonic)
  //const HDWalletProvider = require('@truffle/hdwallet-provider');
  const HDWalletProvider = require('truffle-hdwallet-provider-privkey');
