@@ -53,12 +53,15 @@ contract NodeRewards is Ownable {
     }
 
     // check all active nodes to calculate current stakes.
-    function updateNodes() public {
+    function updateNodes(address _user) public returns (bool isStaker){
         bytes32[] memory nodes = swapContract.getActiveNodes();
         uint256 newTotalStaked;
         for (uint i = 0; i < nodes.length; i ++) {
             (address node,) = _splitToValues(nodes[i]);
             newTotalStaked = newTotalStaked.add(barn.balanceOf(node));
+            if (_user == node) {
+                isStaker = true;
+            }
         }
         // only change when stakers had actions.
         if (totalStaked != newTotalStaked) {
@@ -68,8 +71,7 @@ contract NodeRewards is Ownable {
 
     // claim calculates the currently owed reward and transfers the funds to the user
     function claim() public returns (uint256){
-        updateNodes();
-        require(checkNode(msg.sender), "msg.sender is not stakers");
+        require(updateNodes(msg.sender), "msg.sender is not stakers");
 
         _calculateOwed(msg.sender);
 
@@ -231,16 +233,5 @@ contract NodeRewards is Ownable {
             address(uint160(uint256(_data))),
             uint256(uint96(bytes12(_data)))
         );
-    }
-
-    function checkNode(address _addr) public returns (bool) {
-        bytes32[] memory nodes = swapContract.getActiveNodes();
-        for (uint i = 0; i < nodes.length; i ++) {
-            (address node,) = _splitToValues(nodes[i]);
-            if (_addr == node) {
-                return true;
-            }
-        }
-        return false;
     }
 }
