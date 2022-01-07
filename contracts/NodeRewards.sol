@@ -29,7 +29,6 @@ contract NodeRewards is Ownable {
     uint256 public currentMultiplier;
 
     uint256 public totalStaked;
-    address[] public activeNodes;
 
     mapping(address => uint256) public userMultiplier;
     mapping(address => uint256) public owed;
