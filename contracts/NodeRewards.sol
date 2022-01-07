@@ -72,7 +72,7 @@ contract NodeRewards is Ownable {
     // claim calculates the currently owed reward and transfers the funds to the user
     function claim() public returns (uint256){
         updateNodes();
-        require(checkNode(user), "user is not stakers");
+        require(checkNode(msg.sender), "msg.sender is not stakers");
 
         _calculateOwed(msg.sender);
 
