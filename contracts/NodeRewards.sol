@@ -35,8 +35,8 @@ contract NodeRewards is Ownable {
     mapping(address => uint256) public owed;
 
     IBarn public barn;
-    IERC20 public rewardToken;
-    ISwapContract public swapContract;
+    IERC20 public immutable rewardToken;
+    ISwapContract public immutable swapContract;
 
     event Claim(address indexed user, uint256 amount);
 
@@ -54,17 +54,14 @@ contract NodeRewards is Ownable {
 
     // check all active nodes to calculate current stakes.
     function updateNodes() public {
-        bytes32[] memory nodes = swap.getActiveNodes();
-        address[] memory newNodes = new address[](nodes.length);
-        uint256 newTotalStaked = 0;
+        bytes32[] memory nodes = swapContract.getActiveNodes();
+        uint256 newTotalStaked;
         for (uint i = 0; i < nodes.length; i ++) {
             (address node,) = _splitToValues(nodes[i]);
-            newNodes.push(node);
             newTotalStaked = newTotalStaked.add(barn.balanceOf(node));
         }
         // only change when stakers had actions.
         if (totalStaked != newTotalStaked) {
-            activeNodes = newNodes;
             totalStaked = newTotalStaked;
         }
     }
@@ -237,8 +234,10 @@ contract NodeRewards is Ownable {
     }
 
     function checkNode(address _addr) public returns (bool) {
-        for (uint i = 0; i < activeNodes.length; i ++) {
-            if (_addr == activeNodes[i]) {
+        bytes32[] memory nodes = swapContract.getActiveNodes();
+        for (uint i = 0; i < nodes.length; i ++) {
+            (address node,) = _splitToValues(nodes[i]);
+            if (_addr == node) {
                 return true;
             }
         }
