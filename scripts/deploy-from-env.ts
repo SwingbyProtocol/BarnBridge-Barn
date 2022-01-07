@@ -13,7 +13,7 @@ const _apr = 15;
 // needed for rewards setup
 const _cv = process.env.CV;
 const startTs = process.env.STARTTS;
-// ENDTS must be 1 year later from STARTTS
+// ENDTS must be 1 year later from STARTTS (31536000 sec)
 const endTs = process.env.ENDTS
 // disabled because amount is changed dynamically.
 // const rewardsAmount = BigNumber.from(process.env.REWARDSAMOUNT).mul(helpers.tenPow18);
