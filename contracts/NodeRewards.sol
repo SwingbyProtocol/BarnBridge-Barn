@@ -156,6 +156,8 @@ contract NodeRewards is Ownable {
 
     function setNewAPR(uint256 _apr) public {
         require(msg.sender == owner(), "!owner");
+        _pullToken();
+        ackFunds();
         apr = _apr;
         if (apr == 0) {
             // send all remain tokens to owner (expected governance contract.)
