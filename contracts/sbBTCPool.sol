@@ -20,13 +20,13 @@ contract sbBTCPool is Ownable {
     mapping(address => uint256) public userMultiplier;
     mapping(address => uint256) public owed;
 
-    IBarn public barn;
+    IBarn public immutable barn;
     IERC20 public immutable rewardToken;
-    ISwapContract public immutable swapContract;
+    ISwapContract public swapContract;
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _sbBTC, address _barn, address _swap) {
+    constructor(address _owner, address _sbBTC, address _barn) {
         require(_sbBTC != address(0), "reward token must not be 0x0");
         require(_barn != address(0), "barn address must not be 0x0");
 
@@ -34,7 +34,6 @@ contract sbBTCPool is Ownable {
 
         rewardToken = IERC20(_sbBTC);
         barn = IBarn(_barn);
-        swapContract = ISwapContract(_swap);
     }
 
     // claim calculates the currently owed reward and transfers the funds to the user
@@ -84,11 +83,11 @@ contract sbBTCPool is Ownable {
     }
 
     // setBarn sets the address of the BarnBridge Barn into the state variable
-    function setBarn(address _barn) public {
-        require(_barn != address(0), 'barn address must not be 0x0');
+    function setSwap(address _swap) public {
+        require(swapContract != address(0), 'barn address must not be 0x0');
         require(msg.sender == owner(), '!owner');
 
-        barn = IBarn(_barn);
+        swapContract = ISwapContract(_swap);
     }
 
     // _calculateOwed calculates and updates the total amount that is owed to an user and updates the user's multiplier
