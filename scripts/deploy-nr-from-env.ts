@@ -18,7 +18,7 @@ const endTs = process.env.ENDTS
 console.log(startTs, endTs)
 async function main() {
     const [owner] = await ethers.getSigners();
-    console.log(owner.address)
+    console.log(`signer = ${owner.address}`)
 
     const barn = await ethers.getContractAt('Barn', _barn);
 
