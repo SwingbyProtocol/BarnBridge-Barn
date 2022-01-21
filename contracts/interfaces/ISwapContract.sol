@@ -5,6 +5,6 @@ interface ISwapContract {
 
     function isNodeStake(address _user) external returns (bool);
 
-    function totalNodeStaked() external returns (uint256);
+    function totalStakedAmount() external returns (uint256);
 
 }

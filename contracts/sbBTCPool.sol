@@ -68,7 +68,7 @@ contract sbBTCPool is Ownable {
             return;
         }
 
-        uint256 totalStakedBond = swapContract.totalNodeStaked();
+        uint256 totalStakedBond = swapContract.totalStakedAmount();
         // if there's no bond staked, it doesn't make sense to ackFunds because there's nobody to distribute them to
         // and the calculation would fail anyways due to division by 0
         if (totalStakedBond == 0) {
