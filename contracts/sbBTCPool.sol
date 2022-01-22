@@ -11,6 +11,8 @@ import "./interfaces/ISwapContract.sol";
 contract sbBTCPool is Ownable {
     using SafeMath for uint256;
 
+    uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
+
     bool public disabled;
     uint256 public lastPullTs;
 
