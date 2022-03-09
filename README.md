@@ -2,7 +2,7 @@
 ![](https://i.imgur.com/WhuS8Dv.png)
 
 Implements continuous rewards for staking BOND in the DAO. Implements logic for determining DAO voting power based upon amount of BOND deposited (which becomes vBOND) plus a multiplier (up to 2x) awarded to those who lock their BOND in the DAO for a specified period (up to 1 year). Those that lock their vBOND for 1 year receive a 2x multiplier; those that lock their vBOND for 6 months receive a 1.5x multiplier, and so on. Also allows users to delegate their vBOND voting power to a secondary wallet address.
-**NOTE:** The vBOND multiplier ONLY affects voting power; it does NOT affect rewards. All users who stake BOND receive the same reward rate regardless of the amount of time they have locked or not locked. 
+**NOTE:** The vBOND multiplier ONLY affects voting power; it does NOT affect rewards. All users who stake BOND receive the same reward rate regardless of the amount of time they have locked or not locked.
 
 Any questions? Please contact us on [Discord](https://discord.gg/FfEhsVk) or read our [Developer Guides](https://integrations.barnbridge.com/) for more information.
 
@@ -70,7 +70,7 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 
 ## Initial Setup
 ### Install NVM and the latest version of NodeJS 12.x
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash 
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
     # Restart terminal and/or run commands given at the end of the installation script
     nvm install 12
     nvm use 12
@@ -90,9 +90,9 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 6. Finally, insert the mnemonic phrase for your testing wallet into the .env file section named MNEMONIC. You can use ie a MetaMask instance, and switch the network to Kovan on the upper right. DO NOT USE YOUR PERSONAL METAMASK SEED PHRASE; USE A DIFFERENT BROWSER WITH AN INDEPENDENT METAMASK INSTALLATION
 7. You'll need some Kovan-ETH (it is free) in order to pay the gas costs of deploying the contracts on the TestNet; you can use your GitHub account to authenticate to the [KovanFaucet](https://faucet.kovan.network/) and receive 2 Kovan-ETH for free every 24 hours
 
-### Create an API key with Etherscan 
-8. Navigate to [EtherScan](https://etherscan.io/) and create an account 
-9. Log in and navigate to [MyAPIKey](https://etherscan.io/myapikey) 
+### Create an API key with Etherscan
+8. Navigate to [EtherScan](https://etherscan.io/) and create an account
+9. Log in and navigate to [MyAPIKey](https://etherscan.io/myapikey)
 10. Use the Add button to create an API key, and paste it into the indicated section towards the section labeled ETHERSCAN in the .env file
 
 ### Update .env with the Community Vault contract address
@@ -102,10 +102,10 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 ## Installing
 ### Install NodeJS dependencies which include HardHat
     npm install
-    
+
 ### Compile the contracts
     npm run compile
-    
+
 ## Running Tests
     npm run test
 
@@ -113,7 +113,7 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 ## Running Code Coverage Tests
     npm run coverage
 
-## Deploying to Kovan    
+## Deploying to Kovan
 
     npm run deploy-from-env
 
@@ -121,19 +121,56 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 - [QuantStamp](https://github.com/BarnBridge/BarnBridge-PM/blob/master/audits/BarnBridge%20DAO%20audit%20by%20Quanstamp.pdf)
 - [Haechi](https://github.com/BarnBridge/BarnBridge-PM/blob/master/audits/BarnBridge%20DAO%20audit%20by%20Haechi.pdf)
 
-## Deployed contracts
+## Deployed contracts For SWINGBY
 ### Mainnet
 ```shell
-DiamondCutFacet deployed to: 0x767f7d9E655161C9E6D8a3Dbb565666FCAa2BDf4
-DiamondLoupeFacet deployed to: 0x04499B879F6A7E75802cd09354eF2B788BF4Cf26
-OwnershipFacet deployed to: 0xeB8E3e48F770C5c13D9De2203Fc307B6D04381FF
-ChangeRewardsFacet deployed to: 0xb93E511D913A17826D2Df5AC8BE122C0EBd1A26d
-BarnFacet deployed at: 0xA62dA56e9a330646386365dC6B2945b5C4d120ed
------
-Barn deployed at: 0x10e138877df69Ca44Fdc68655f86c88CDe142D7F
-Rewards deployed at: 0x9d0CF50547D848cC4b6A12BeDCF7696e9b334a22
-```
+CommunityVault (for pre-staking)
+https://etherscan.io/address/0x7afa809786cd034525336afdd45c7f759dcaa824
 
+DiamondCutFacet
+https://etherscan.io/address/0x8d5d176ef5a8448236c51372a982e710885b0e7f
+DiamondLoupeFacet
+https://etherscan.io/address/0x4010749aD0181250DEdb04D362F10188844E3aCa
+OwnershipFacet
+https://etherscan.io/address/0x06a69Af8008e80a6729636c9Fc5AFba2a25b541C
+ChangeRewardsFacet
+https://etherscan.io/address/0xBCF17C031Ea9C39261E345e65c8f60cAbdb1CD5A
+BarnFact
+https://etherscan.io/address/0x03e7081DB878ffeFE9a2800ccbe1F377208Bb546
+
+Barn
+https://etherscan.io/address/0xb4200c8c44b05a342a9f7fd0d27647c4bf9533e7
+Rewards
+https://etherscan.io/address/0xac01adc15878fae7d9b580d6fb695aa735738856
+
+Gov (Governance.sol)
+https://etherscan.io/address/0x6f1e586c62f7d8a1b7394f1a81a75aa68e109365
+```
+### Testnet
+```shell
+CommunityVault (for pre-staking)
+https://ropsten.etherscan.io/address/0xd15c3473da91be7a49e27f3f7ece055e4ceecb0e
+
+DiamondCutFacet
+https://ropsten.etherscan.io/address/0xD638356c72D08b0c55a6030A43eE28EAF00bDe7d
+DiamondLoupeFacet
+https://ropsten.etherscan.io/address/0x3d6aa943d23517857CF99C5F318c9c595bf0B925
+OwnershipFacet
+https://ropsten.etherscan.io/address/0x4f681746b8775a2c469355fdbb1ca937212a9a77
+ChangeRewardsFacet
+https://ropsten.etherscan.io/address/0xf92342cbbf265371740f8bac761d61ccaf6339f8
+BarnFact
+https://ropsten.etherscan.io/address/0x9cb78cf2a86ec22a9212ed96a8e61a16919ce2fe
+
+Barn
+https://ropsten.etherscan.io/address/0x9170f8d749dcf64467793325512a5e34b2b189eb
+Rewards
+https://ropsten.etherscan.io/address/0xbced010b27dc675c46f2526d21e4f1b01eac669f
+
+Gov (Governance.sol)
+https://ropsten.etherscan.io/address/0xb7EAB16427009dae4e063cb723c6a1450C874996
+
+```
 ## Discussion
 For any concerns with the platform, open an issue on GitHub or visit us on [Discord](https://discord.gg/9TTQNUzg) to discuss.
 For security concerns, please email info@barnbridge.com.

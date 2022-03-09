@@ -86,8 +86,8 @@ contract sbBTCPool is Ownable {
 
     // setBarn sets the address of the BarnBridge Barn into the state variable
     function setSwap(address _swap) public {
-        require(swapContract != address(0), 'barn address must not be 0x0');
-        require(msg.sender == owner(), '!owner');
+        require(swapContract != address(0), "swapContract address must not be 0x0");
+        require(msg.sender == owner(), "!owner");
 
         swapContract = ISwapContract(_swap);
     }
