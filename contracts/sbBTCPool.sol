@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity 0.7.6;
-pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -13,7 +12,6 @@ contract sbBTCPool is Ownable {
 
     uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
 
-    bool public disabled;
     uint256 public lastPullTs;
 
     uint256 public balanceBefore;
@@ -22,25 +20,27 @@ contract sbBTCPool is Ownable {
     mapping(address => uint256) public userMultiplier;
     mapping(address => uint256) public owed;
 
-    IBarn public immutable barn;
-    IERC20 public immutable rewardToken;
+    IBarn public barn;
+    IERC20 public rewardToken;
     ISwapContract public swapContract;
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _sbBTC, address _barn) {
-        require(_sbBTC != address(0), "reward token must not be 0x0");
+    // setup sets the contracts
+    function setup(address _swap, address _barn) public {
+        require(_swap != address(0), "swapContract address must not be 0x0");
         require(_barn != address(0), "barn address must not be 0x0");
+        require(msg.sender == owner(), "!owner");
+        require(address(rewardToken) == address(0), "rewardToken must be 0x0");
 
-        transferOwnership(_owner);
-
-        rewardToken = IERC20(_sbBTC);
+        swapContract = ISwapContract(_swap);
+        rewardToken = IERC20(swapContract.lpToken());
         barn = IBarn(_barn);
     }
 
     // claim calculates the currently owed reward and transfers the funds to the user
     function claim() public returns (uint256){
-        require(swapContract.isNodeStaked(msg.sender), "msg.sender is not staker");
+        require(swapContract.isNodeStake(msg.sender), "msg.sender is not staker");
 
         _calculateOwed(msg.sender);
 
@@ -82,14 +82,6 @@ contract sbBTCPool is Ownable {
 
         balanceBefore = balanceNow;
         currentMultiplier = multiplier;
-    }
-
-    // setBarn sets the address of the BarnBridge Barn into the state variable
-    function setSwap(address _swap) public {
-        require(swapContract != address(0), "swapContract address must not be 0x0");
-        require(msg.sender == owner(), "!owner");
-
-        swapContract = ISwapContract(_swap);
     }
 
     // _calculateOwed calculates and updates the total amount that is owed to an user and updates the user's multiplier

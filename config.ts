@@ -14,11 +14,11 @@ export const networks: NetworksUserConfig = {
         accounts: {
             mnemonic: process.env.MNEMONIC,
             path: "m/44'/60'/0'/0",
-            initialIndex: 0,
+            initialIndex: 1,
             count: 10
         },
         gas: "auto",
-        gasPrice: 50000000000, // 50 gwei
+        gasPrice: 110000000000, // 50 gwei
         gasMultiplier: 1.5
     },
 

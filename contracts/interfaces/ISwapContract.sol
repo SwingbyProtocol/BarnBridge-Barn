@@ -7,4 +7,5 @@ interface ISwapContract {
 
     function totalStakedAmount() external returns (uint256);
 
+    function lpToken() external returns (address);
 }
