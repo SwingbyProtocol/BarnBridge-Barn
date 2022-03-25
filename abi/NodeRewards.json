@@ -310,7 +310,7 @@
   },
   {
     "inputs": [],
-    "name": "totalStaked",
+    "name": "totalNodeStaked",
     "outputs": [
       {
         "internalType": "uint256",

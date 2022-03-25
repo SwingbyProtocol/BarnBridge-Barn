@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./interfaces/IBarn.sol";
+import "./interfaces/INodeRewards.sol";
 import "./interfaces/ISwapContract.sol";
 
 contract sbBTCPool is Ownable {
@@ -22,12 +23,13 @@ contract sbBTCPool is Ownable {
 
     IBarn public barn;
     IERC20 public rewardToken;
+    INodeRewards public nodeRewards;
     ISwapContract public swapContract;
 
     event Claim(address indexed user, uint256 amount);
 
     // setup sets the contracts
-    function setup(address _swap, address _barn) public {
+    function setup(address _swap, address _barn, address _nodeRewards) public {
         require(_swap != address(0), "swapContract address must not be 0x0");
         require(_barn != address(0), "barn address must not be 0x0");
         require(msg.sender == owner(), "!owner");
@@ -35,6 +37,7 @@ contract sbBTCPool is Ownable {
 
         swapContract = ISwapContract(_swap);
         rewardToken = IERC20(swapContract.lpToken());
+        nodeRewards = INodeRewards(_nodeRewards);
         barn = IBarn(_barn);
     }
 
@@ -70,15 +73,15 @@ contract sbBTCPool is Ownable {
             return;
         }
 
-        uint256 totalStakedBond = swapContract.totalStakedAmount();
+        uint256 totalStaked = nodeRewards.totalNodeStaked();
         // if there's no bond staked, it doesn't make sense to ackFunds because there's nobody to distribute them to
         // and the calculation would fail anyways due to division by 0
-        if (totalStakedBond == 0) {
+        if (totalStaked == 0) {
             return;
         }
 
         uint256 diff = balanceNow.sub(balanceBefore);
-        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalStakedBond));
+        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalStaked));
 
         balanceBefore = balanceNow;
         currentMultiplier = multiplier;

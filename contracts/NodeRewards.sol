@@ -20,15 +20,15 @@ contract NodeRewards is Ownable {
         uint256 totalDuration;
     }
 
-    Pull public pullFeature;
     bool public disabled;
+    Pull public pullFeature;
     uint256 public lastPullTs;
     uint256 public apr;
 
     uint256 public balanceBefore;
     uint256 public currentMultiplier;
 
-    uint256 public totalStaked;
+    uint256 public totalNodeStaked;
 
     mapping(address => uint256) public userMultiplier;
     mapping(address => uint256) public owed;
@@ -53,24 +53,23 @@ contract NodeRewards is Ownable {
 
     // check all active nodes to calculate current stakes.
     function updateNodes() public returns (bool isStaker){
-        bytes32[] memory nodes = swapContract.getActiveNodes();
-        uint256 newTotalStaked;
+        address[] memory nodes = swapContract.getActiveNodes();
+        uint256 newTotalNodeStaked;
         for (uint i = 0; i < nodes.length; i ++) {
-            (address node,) = _splitToValues(nodes[i]);
-            newTotalStaked = newTotalStaked.add(barn.balanceOf(node));
-            if (msg.sender == node) {
+            newTotalNodeStaked = newTotalNodeStaked.add(barn.balanceOf(nodes[i]));
+            if (msg.sender == nodes[i]) {
                 isStaker = true;
             }
         }
         // only change when stakers had actions.
-        if (totalStaked != newTotalStaked) {
-            totalStaked = newTotalStaked;
+        if (totalNodeStaked != newTotalNodeStaked) {
+            totalNodeStaked = newTotalNodeStaked;
         }
     }
 
     // claim calculates the currently owed reward and transfers the funds to the user
     function claim() public returns (uint256){
-        require(updateNodes(), "caller is not stakers");
+        require(updateNodes(), "caller is not node");
 
         _calculateOwed(msg.sender);
 
@@ -99,16 +98,14 @@ contract NodeRewards is Ownable {
             balanceBefore = balanceNow;
             return;
         }
-
-        uint256 totalStakedBond = totalStaked;
         // if there's no bond staked, it doesn't make sense to ackFunds because there's nobody to distribute them to
         // and the calculation would fail anyways due to division by 0
-        if (totalStakedBond == 0) {
+        if (totalNodeStaked == 0) {
             return;
         }
 
         uint256 diff = balanceNow.sub(balanceBefore);
-        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalStakedBond));
+        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalNodeStaked));
 
         balanceBefore = balanceNow;
         currentMultiplier = multiplier;
@@ -190,9 +187,8 @@ contract NodeRewards is Ownable {
         // extends pullFeature.totalDuration
         pullFeature.totalDuration = pullFeature.totalDuration.add(timeSinceLastPull);
 
-        uint256 totalStakedBond = totalStaked;
         // use required amount instead of pullFeature.totalAmount for calculate SWINGBY static APY for stakers
-        uint256 requiredAmountFor1Y = totalStakedBond.mul(apr).div(100);
+        uint256 requiredAmountFor1Y = totalNodeStaked.mul(apr).div(100);
 
         uint256 shareToPull = timeSinceLastPull.mul(decimals).div(pullFeature.totalDuration);
         uint256 amountToPull = requiredAmountFor1Y.mul(shareToPull).div(decimals);
