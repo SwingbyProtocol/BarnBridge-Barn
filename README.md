@@ -123,7 +123,7 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 
 ## Deployed contracts For SWINGBY
 ### Mainnet
-```shell
+```
 CommunityVault (for pre-staking)
 https://etherscan.io/address/0x7afa809786cd034525336afdd45c7f759dcaa824
 
@@ -147,9 +147,11 @@ Gov (Governance.sol)
 https://etherscan.io/address/0x6f1e586c62f7d8a1b7394f1a81a75aa68e109365
 ```
 ### Testnet
-```shell
+```
 CommunityVault (for pre-staking)
 https://ropsten.etherscan.io/address/0xd15c3473da91be7a49e27f3f7ece055e4ceecb0e
+CommunityVault (for node-staking)
+https://ropsten.etherscan.io/address/0xF9E552e3b21DB6638caaff4A583e3009cC579e68
 
 DiamondCutFacet
 https://ropsten.etherscan.io/address/0xD638356c72D08b0c55a6030A43eE28EAF00bDe7d
@@ -166,9 +168,11 @@ Barn
 https://ropsten.etherscan.io/address/0x9170f8d749dcf64467793325512a5e34b2b189eb
 Rewards
 https://ropsten.etherscan.io/address/0xbced010b27dc675c46f2526d21e4f1b01eac669f
+NodeRewards
+https://ropsten.etherscan.io/address/0xdB2C8fA1DdfE37AFcCAFc55870be570c1e548736
 
 sbBTCPool
-https://ropsten.etherscan.io/address/0xc5200d80c68aa78f451da7b8adb90fcdb9d63914
+https://ropsten.etherscan.io/address/0x313c379ec483678f0ae9f612e56ea983636dd627
 
 Gov (Governance.sol)
 https://ropsten.etherscan.io/address/0xb7EAB16427009dae4e063cb723c6a1450C874996
