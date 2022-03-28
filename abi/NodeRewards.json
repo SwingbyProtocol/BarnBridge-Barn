@@ -12,16 +12,6 @@
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_barn",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_swap",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_apr",
         "type": "uint256"
@@ -252,9 +242,14 @@
         "internalType": "address",
         "name": "_barn",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_swap",
+        "type": "address"
       }
     ],
-    "name": "setBarn",
+    "name": "setBarnAndSwap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -3,9 +3,7 @@ import { NodeRewards } from '../typechain';
 require('dotenv').config();
 import { ethers } from 'hardhat';
 
-const _bond = process.env.BOND;
-const _barn = process.env.BARN ? process.env.BARN : "";
-const _swap = process.env.SWAP
+const _swingby = process.env.SWINGBY;
 const _apr = 15;
 // needed for rewards setup
 const _cv = process.env.CV;
@@ -18,10 +16,7 @@ console.log(startTs, endTs)
 async function main() {
     const [owner] = await ethers.getSigners();
     console.log(`signer = ${owner.address}`)
-
-    const barn = await ethers.getContractAt('Barn', _barn);
-
-    const nodeRewards = (await deploy.deployContract('NodeRewards', [owner.address, _bond, barn.address, _swap, _apr])) as NodeRewards;
+    const nodeRewards = (await deploy.deployContract('NodeRewards', [owner.address, _swingby, _apr])) as NodeRewards;
     console.log(`nodeRewards deployed at: ${nodeRewards.address}`);
 
     await nodeRewards.setupPullToken(_cv, startTs, endTs);

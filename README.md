@@ -169,10 +169,10 @@ https://ropsten.etherscan.io/address/0x9170f8d749dcf64467793325512a5e34b2b189eb
 Rewards
 https://ropsten.etherscan.io/address/0xbced010b27dc675c46f2526d21e4f1b01eac669f
 NodeRewards
-https://ropsten.etherscan.io/address/0xfA3ad7C76E3d4fD2113a5e3f476a1Ea0B9C07919
+https://ropsten.etherscan.io/address/0xEB6e2c63d5feb3B718CCaEbf9A14482127a63E84
 
 sbBTCPool
-https://ropsten.etherscan.io/address/0x313c379ec483678f0ae9f612e56ea983636dd627
+https://ropsten.etherscan.io/address/0xf5329508Fdb96A1aada673dB6572109a228edB7e
 
 Gov (Governance.sol)
 https://ropsten.etherscan.io/address/0xb7EAB16427009dae4e063cb723c6a1450C874996

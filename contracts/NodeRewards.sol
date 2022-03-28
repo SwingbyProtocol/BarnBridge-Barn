@@ -35,19 +35,14 @@ contract NodeRewards is Ownable {
 
     IBarn public barn;
     IERC20 public immutable rewardToken;
-    ISwapContract public immutable swapContract;
+    ISwapContract public swapContract;
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _swingby, address _barn, address _swap, uint256 _apr) {
+    constructor(address _owner, address _swingby, uint256 _apr) {
         require(_swingby != address(0), "reward token must not be 0x0");
-        require(_barn != address(0), "barn address must not be 0x0");
-
         transferOwnership(_owner);
-
         rewardToken = IERC20(_swingby);
-        barn = IBarn(_barn);
-        swapContract = ISwapContract(_swap);
         apr = _apr;
     }
 
@@ -144,10 +139,11 @@ contract NodeRewards is Ownable {
     }
 
     // setBarn sets the address of the BarnBridge Barn into the state variable
-    function setBarn(address _barn) public {
+    function setBarnAndSwap(address _barn, address _swap) public {
         require(_barn != address(0), 'barn address must not be 0x0');
+        require(_swap != address(0), 'swap contract address must not be 0x0');
         require(msg.sender == owner(), '!owner');
-
+        swapContract = ISwapContract(_swap);
         barn = IBarn(_barn);
     }
 
