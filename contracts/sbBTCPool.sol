@@ -11,9 +11,7 @@ import "./interfaces/ISwapContract.sol";
 contract sbBTCPool is Ownable {
     using SafeMath for uint256;
 
-    uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
-
-    uint256 public lastPullTs;
+    uint256 constant divisor = 10 ** 27;
 
     uint256 public balanceBefore;
     uint256 public currentMultiplier;
@@ -81,7 +79,7 @@ contract sbBTCPool is Ownable {
         }
 
         uint256 diff = balanceNow.sub(balanceBefore);
-        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalStaked));
+        uint256 multiplier = currentMultiplier.add(diff.mul(divisor).div(totalStaked));
 
         balanceBefore = balanceNow;
         currentMultiplier = multiplier;
@@ -105,6 +103,6 @@ contract sbBTCPool is Ownable {
 
         uint256 multiplier = currentMultiplier.sub(userMultiplier[user]);
 
-        return barn.balanceOf(user).mul(multiplier).div(decimals);
+        return barn.balanceOf(user).mul(multiplier).div(divisor);
     }
 }
