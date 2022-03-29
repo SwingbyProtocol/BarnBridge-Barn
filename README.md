@@ -126,6 +126,8 @@ Check out more detailed smart contract Slither graphs with all the dependencies:
 ```
 CommunityVault (for pre-staking)
 https://etherscan.io/address/0x7afa809786cd034525336afdd45c7f759dcaa824
+CommunityVault (for node-staking)
+https://etherscan.io/address/0xc02a33c968108411d1d7dc8f31587c59905c98e9
 
 DiamondCutFacet
 https://etherscan.io/address/0x8d5d176ef5a8448236c51372a982e710885b0e7f
@@ -141,10 +143,25 @@ https://etherscan.io/address/0x03e7081DB878ffeFE9a2800ccbe1F377208Bb546
 Barn
 https://etherscan.io/address/0xb4200c8c44b05a342a9f7fd0d27647c4bf9533e7
 Rewards
-https://etherscan.io/address/0xac01adc15878fae7d9b580d6fb695aa735738856
+https://etherscan.io/address/0x22f6de9b90783fa94afb08d34fcfda0ceb07988b
+NodeRewards
+https://etherscan.io/address/0xf30424a40027E3e424a519f4964402896d004877
+sbBTCPool
+https://etherscan.io/address/0x2f927257dc6783f5ae0644Ee729242533699B2C1
 
-Gov (Governance.sol)
-https://etherscan.io/address/0x6f1e586c62f7d8a1b7394f1a81a75aa68e109365
+Gov
+https://etherscan.io/address/0xd311f3ba15e4a4ecc27ec6f5e7630b544cf2286b
+
+Params
+https://etherscan.io/address/0x9b50Fe186a8881741ef2aEF2fCEb9f17DF82DC7E
+
+SwapRewards
+https://etherscan.io/address/0x2a3040D8B2a4ea8d3C36c04AE2affB9c5a8e856d
+
+SwapContracts
+https://etherscan.io/address/0x4A084C0D1f89793Bb57f49b97c4e3a24cA539aAA
+LPToken
+https://etherscan.io/address/0x44a62c7121a64691b61aef669f21c628258e7d52
 ```
 ### Testnet
 ```
