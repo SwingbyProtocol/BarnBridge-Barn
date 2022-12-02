@@ -7,20 +7,19 @@ require('dotenv').config();
 import { ethers } from 'hardhat';
 
 
-const _owner = process.env.OWNER;
 const _bond = process.env.BOND;
 const _apr = 15;
 // needed for rewards setup
 const _cv = process.env.CV;
-const startTs = process.env.STARTTS;
+//const startTs = process.env.STARTTS;
 // ENDTS must be 1 year later from STARTTS (31536000 sec)
-const endTs = process.env.ENDTS
+//const endTs = process.env.ENDTS
 // disabled because amount is changed dynamically.
 // const rewardsAmount = BigNumber.from(process.env.REWARDSAMOUNT).mul(helpers.tenPow18);
-console.log(startTs, endTs)
-async function main () {
+//console.log(startTs, endTs)
+async function main() {
     const [owner] = await ethers.getSigners();
-    console.log(owner.address)
+    console.log(`signer = ${owner.address}`)
     const cutFacet = await deploy.deployContract('DiamondCutFacet');
     console.log(`DiamondCutFacet deployed to: ${cutFacet.address}`);
 
@@ -39,11 +38,11 @@ async function main () {
     const diamond = await deploy.deployDiamond(
         'Barn',
         [cutFacet, loupeFacet, ownershipFacet, crf, barnFacet],
-        _owner,
+        owner.address,
     );
     console.log(`Barn deployed at: ${diamond.address}`);
 
-    const rewards = (await deploy.deployContract('Rewards', [_owner, _bond, diamond.address, _apr])) as Rewards;
+    const rewards = (await deploy.deployContract('Rewards', [owner.address, _bond, _apr, _cv])) as Rewards;
     console.log(`Rewards deployed at: ${rewards.address}`);
 
     console.log('Calling initBarn');
@@ -51,7 +50,7 @@ async function main () {
     await barn.initBarn(_bond, rewards.address);
 
     //await rewards.setupPullToken(_cv, startTs, endTs, rewardsAmount);
-    await rewards.setupPullToken(_cv, startTs, endTs);
+    //await rewards.setupPullToken(_cv, startTs, endTs);
 }
 
 main()

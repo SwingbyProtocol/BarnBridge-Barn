@@ -1,12 +1,15 @@
 import * as deploy from '../test/helpers/deploy';
+import { ethers } from 'hardhat';
 
-const _bond = '0x64496f51779e400C5E955228E56fA41563Fb4dd8';
-const _dao = '0x1B5B6dF2C72D7c406df1C30E640df8dBaE57d21d';
-const _barn = '0x19cFBFd65021af353aB8A7126Caf51920163f0D2';
+const _bond = '0xFCd51B56e65605C33024A9E98a7aaDfF2e1A15b9';
+const _apr = 10;
+const _cv = '0xb52E4F319D75918B03A3bdd02D20479bF4fa8399';
 
-async function main () {
-    const rewards = await deploy.deployContract('Rewards', [_dao, _bond, _barn]);
-    console.log(`Rewards deployed at: ${rewards.address}`);
+async function main() {
+    const [owner] = await ethers.getSigners();
+    console.log(`signer = ${owner.address}`)
+    const rewards = await deploy.deployContract('Rewards', [owner.address, _bond, _apr, _cv]);
+    console.log(`New Rewards deployed at: ${rewards.address}`);
 }
 
 main()

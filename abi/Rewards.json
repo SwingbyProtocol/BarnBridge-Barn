@@ -12,14 +12,14 @@
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_barn",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "_apr",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_source",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -137,15 +137,9 @@
   },
   {
     "inputs": [],
-    "name": "disabled",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "emergencyWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -194,34 +188,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "pullFeature",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "source",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTs",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endTs",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalDuration",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -260,6 +226,11 @@
         "internalType": "address",
         "name": "_barn",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTs",
+        "type": "uint256"
       }
     ],
     "name": "setBarn",
@@ -281,26 +252,16 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "source",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "source",
+        "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "startTs",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "endTs",
-        "type": "uint256"
       }
     ],
-    "name": "setupPullToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {

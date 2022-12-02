@@ -11,17 +11,10 @@ import "./interfaces/ISwapContract.sol";
 contract NodeRewards is Ownable {
     using SafeMath for uint256;
 
-    uint256 constant decimals = 10 ** 18; // Same as SWINGBY token's decimal
+    uint256 constant decimals = 10**18; // Same as SWINGBY token's decimal
     uint256 constant oneYear = 31536000;
-    struct Pull {
-        address source;
-        uint256 startTs;
-        uint256 endTs;
-        uint256 totalDuration;
-    }
 
-    bool public disabled;
-    Pull public pullFeature;
+    address public source;
     uint256 public lastPullTs;
     uint256 public apr;
 
@@ -39,21 +32,63 @@ contract NodeRewards is Ownable {
 
     event Claim(address indexed user, uint256 amount);
 
-    constructor(address _owner, address _swingby, uint256 _apr) {
+    constructor(
+        address _owner,
+        address _swingby,
+        uint256 _apr,
+        address _source
+    ) {
         require(_swingby != address(0), "reward token must not be 0x0");
         transferOwnership(_owner);
         rewardToken = IERC20(_swingby);
+        source = _source;
         apr = _apr;
     }
 
+    function setNewAPR(uint256 _apr) public {
+        require(msg.sender == owner(), "!owner");
+        _pullToken();
+        ackFunds();
+        apr = _apr;
+    }
+
+    function emergencyWithdraw() public {
+        require(msg.sender == owner(), "!owner");
+        rewardToken.transfer(msg.sender, rewardToken.balanceOf(address(this)));
+    }
+
+    // setBarn sets the address of the BarnBridge Barn into the state variable
+    function setBarnAndSwap(
+        address _barn,
+        address _swap,
+        uint256 _startTs
+    ) public {
+        require(_barn != address(0), "barn address must not be 0x0");
+        require(_swap != address(0), "swap contract address must not be 0x0");
+        require(msg.sender == owner(), "!owner");
+        swapContract = ISwapContract(_swap);
+        barn = IBarn(_barn);
+        lastPullTs = _startTs;
+    }
+
+    function resetUnstakedNode(address _node) public {
+        require(!swapContract.isNodeStake(_node), "node is staker");
+        userMultiplier[_node] = currentMultiplier;
+    }
+
     // check all active nodes to calculate current stakes.
-    function updateNodes() public returns (bool isStaker){
+    function updateNodes() public returns (bool isStaker) {
         address[] memory nodes = swapContract.getActiveNodes();
         uint256 newTotalNodeStaked;
-        for (uint i = 0; i < nodes.length; i ++) {
-            newTotalNodeStaked = newTotalNodeStaked.add(barn.balanceOf(nodes[i]));
+        for (uint256 i = 0; i < nodes.length; i++) {
+            newTotalNodeStaked = newTotalNodeStaked.add(
+                barn.balanceOf(nodes[i])
+            );
             if (msg.sender == nodes[i]) {
                 isStaker = true;
+            }
+            if (userMultiplier[nodes[i]] == 0) {
+                userMultiplier[nodes[i]] = currentMultiplier;
             }
         }
         // only change when stakers had actions.
@@ -63,7 +98,7 @@ contract NodeRewards is Ownable {
     }
 
     // claim calculates the currently owed reward and transfers the funds to the user
-    function claim() public returns (uint256){
+    function claim() public returns (uint256) {
         require(updateNodes(), "caller is not node");
 
         _calculateOwed(msg.sender);
@@ -83,9 +118,20 @@ contract NodeRewards is Ownable {
         return amount;
     }
 
-    // ackFunds checks the difference between the last known balance of `token` and the current one
-    // if it goes up, the multiplier is re-calculated
-    // if it goes down, it only updates the known balance
+    function _pullToken() internal {
+        uint256 timeSinceLastPull = block.timestamp.sub(lastPullTs);
+        // use required amount instead of pullFeature.totalAmount for calculate SWINGBY static APY for stakers
+        uint256 requiredAmountFor1Y = totalNodeStaked.mul(apr).div(100);
+
+        uint256 shareToPull = timeSinceLastPull.mul(decimals).div(oneYear);
+        uint256 amountToPull = requiredAmountFor1Y.mul(shareToPull).div(
+            decimals
+        );
+
+        lastPullTs = block.timestamp;
+        rewardToken.transferFrom(source, address(this), amountToPull);
+    }
+
     function ackFunds() public {
         uint256 balanceNow = rewardToken.balanceOf(address(this));
 
@@ -93,104 +139,17 @@ contract NodeRewards is Ownable {
             balanceBefore = balanceNow;
             return;
         }
-        // if there's no bond staked, it doesn't make sense to ackFunds because there's nobody to distribute them to
-        // and the calculation would fail anyways due to division by 0
         if (totalNodeStaked == 0) {
             return;
         }
 
         uint256 diff = balanceNow.sub(balanceBefore);
-        uint256 multiplier = currentMultiplier.add(diff.mul(decimals).div(totalNodeStaked));
+        uint256 multiplier = currentMultiplier.add(
+            diff.mul(decimals).div(totalNodeStaked)
+        );
 
         balanceBefore = balanceNow;
         currentMultiplier = multiplier;
-    }
-
-    // setupPullToken is used to setup the rewards system; only callable by contract owner
-    // set source to address(0) to disable the functionality
-    function setupPullToken(address source, uint256 startTs, uint256 endTs) public {
-        require(msg.sender == owner(), "!owner");
-        require(!disabled, "contract is disabled");
-
-        require(endTs.sub(startTs) == oneYear, "endTs.sub(startTs) != 1year");
-
-        if (pullFeature.source != address(0)) {
-            require(source == address(0), "contract is already set up, source must be 0x0");
-            disabled = true;
-        } else {
-            require(source != address(0), "contract is not setup, source must be != 0x0");
-        }
-
-        if (source == address(0)) {
-            require(startTs == 0, "disable contract: startTs must be 0");
-            require(endTs == 0, "disable contract: endTs must be 0");
-        } else {
-            require(endTs > startTs, "setup contract: endTs must be greater than startTs");
-        }
-        pullFeature.source = source;
-        pullFeature.startTs = startTs;
-        pullFeature.endTs = endTs;
-        // duration must be 1Y always. (For calculate SWINGBY APY)
-        pullFeature.totalDuration = endTs.sub(startTs);
-
-        if (lastPullTs < startTs) {
-            lastPullTs = startTs;
-        }
-    }
-
-    // setBarn sets the address of the BarnBridge Barn into the state variable
-    function setBarnAndSwap(address _barn, address _swap) public {
-        require(_barn != address(0), 'barn address must not be 0x0');
-        require(_swap != address(0), 'swap contract address must not be 0x0');
-        require(msg.sender == owner(), '!owner');
-        swapContract = ISwapContract(_swap);
-        barn = IBarn(_barn);
-    }
-
-    function setNewAPR(uint256 _apr) public {
-        require(msg.sender == owner(), "!owner");
-        _pullToken();
-        ackFunds();
-        apr = _apr;
-        if (apr == 0) {
-            // send all remain tokens to owner (expected governance contract.)
-            uint256 amountToPull = rewardToken.balanceOf(address(pullFeature.source));
-            rewardToken.transferFrom(pullFeature.source, owner(), amountToPull);
-        }
-    }
-
-    // _pullToken calculates the amount based on the time passed since the last pull relative
-    // to the total amount of time that the pull functionality is active and executes a transferFrom from the
-    // address supplied as `pullTokenFrom`, if enabled
-    function _pullToken() internal {
-        if (
-            pullFeature.source == address(0) ||
-            block.timestamp < pullFeature.startTs
-        ) {
-            return;
-        }
-
-        uint256 timestampCap = pullFeature.endTs;
-        if (block.timestamp < pullFeature.endTs) {
-            timestampCap = block.timestamp;
-        }
-
-        if (lastPullTs >= timestampCap) {
-            return;
-        }
-
-        uint256 timeSinceLastPull = timestampCap.sub(lastPullTs);
-        // extends pullFeature.totalDuration
-        pullFeature.totalDuration = pullFeature.totalDuration.add(timeSinceLastPull);
-
-        // use required amount instead of pullFeature.totalAmount for calculate SWINGBY static APY for stakers
-        uint256 requiredAmountFor1Y = totalNodeStaked.mul(apr).div(100);
-
-        uint256 shareToPull = timeSinceLastPull.mul(decimals).div(pullFeature.totalDuration);
-        uint256 amountToPull = requiredAmountFor1Y.mul(shareToPull).div(decimals);
-
-        lastPullTs = block.timestamp;
-        rewardToken.transferFrom(pullFeature.source, address(this), amountToPull);
     }
 
     // _calculateOwed calculates and updates the total amount that is owed to an user and updates the user's multiplier
@@ -209,22 +168,7 @@ contract NodeRewards is Ownable {
     // _userPendingReward calculates the reward that should be based on the current multiplier / anything that's not included in the `owed[user]` value
     // it does not represent the entire reward that's due to the user unless added on top of `owed[user]`
     function _userPendingReward(address user) internal view returns (uint256) {
-
         uint256 multiplier = currentMultiplier.sub(userMultiplier[user]);
-
         return barn.balanceOf(user).mul(multiplier).div(decimals);
-    }
-
-    /// @dev _splitToValues returns address and amount of staked SWINGBYs
-    /// @param _data The info of a staker.
-    function _splitToValues(bytes32 _data)
-        internal
-        pure
-        returns (address, uint256)
-    {
-        return (
-            address(uint160(uint256(_data))),
-            uint256(uint96(bytes12(_data)))
-        );
     }
 }
