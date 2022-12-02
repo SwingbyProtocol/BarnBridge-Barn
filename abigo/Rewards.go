@@ -30,7 +30,7 @@ var (
 
 // RewardsMetaData contains all meta data concerning the Rewards contract.
 var RewardsMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_swingby\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_barn\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_apr\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Claim\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"ackFunds\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"apr\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"balanceBefore\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"barn\",\"outputs\":[{\"internalType\":\"contractIBarn\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claim\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentMultiplier\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"disabled\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"lastPullTs\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"owed\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"pullFeature\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"source\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTs\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTs\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"totalDuration\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"registerUserAction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardToken\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_barn\",\"type\":\"address\"}],\"name\":\"setBarn\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_apr\",\"type\":\"uint256\"}],\"name\":\"setNewAPR\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"source\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTs\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTs\",\"type\":\"uint256\"}],\"name\":\"setupPullToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userMultiplier\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_swingby\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_apr\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_source\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Claim\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"ackFunds\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"apr\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"balanceBefore\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"barn\",\"outputs\":[{\"internalType\":\"contractIBarn\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claim\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"currentMultiplier\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"emergencyWithdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"lastPullTs\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"owed\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"registerUserAction\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"rewardToken\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_barn\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_startTs\",\"type\":\"uint256\"}],\"name\":\"setBarn\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_apr\",\"type\":\"uint256\"}],\"name\":\"setNewAPR\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"source\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userMultiplier\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // RewardsABI is the input ABI used to generate the binding from.
@@ -303,37 +303,6 @@ func (_Rewards *RewardsCallerSession) CurrentMultiplier() (*big.Int, error) {
 	return _Rewards.Contract.CurrentMultiplier(&_Rewards.CallOpts)
 }
 
-// Disabled is a free data retrieval call binding the contract method 0xee070805.
-//
-// Solidity: function disabled() view returns(bool)
-func (_Rewards *RewardsCaller) Disabled(opts *bind.CallOpts) (bool, error) {
-	var out []interface{}
-	err := _Rewards.contract.Call(opts, &out, "disabled")
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// Disabled is a free data retrieval call binding the contract method 0xee070805.
-//
-// Solidity: function disabled() view returns(bool)
-func (_Rewards *RewardsSession) Disabled() (bool, error) {
-	return _Rewards.Contract.Disabled(&_Rewards.CallOpts)
-}
-
-// Disabled is a free data retrieval call binding the contract method 0xee070805.
-//
-// Solidity: function disabled() view returns(bool)
-func (_Rewards *RewardsCallerSession) Disabled() (bool, error) {
-	return _Rewards.Contract.Disabled(&_Rewards.CallOpts)
-}
-
 // LastPullTs is a free data retrieval call binding the contract method 0x100223bb.
 //
 // Solidity: function lastPullTs() view returns(uint256)
@@ -427,61 +396,6 @@ func (_Rewards *RewardsCallerSession) Owner() (common.Address, error) {
 	return _Rewards.Contract.Owner(&_Rewards.CallOpts)
 }
 
-// PullFeature is a free data retrieval call binding the contract method 0x4831976c.
-//
-// Solidity: function pullFeature() view returns(address source, uint256 startTs, uint256 endTs, uint256 totalDuration)
-func (_Rewards *RewardsCaller) PullFeature(opts *bind.CallOpts) (struct {
-	Source        common.Address
-	StartTs       *big.Int
-	EndTs         *big.Int
-	TotalDuration *big.Int
-}, error) {
-	var out []interface{}
-	err := _Rewards.contract.Call(opts, &out, "pullFeature")
-
-	outstruct := new(struct {
-		Source        common.Address
-		StartTs       *big.Int
-		EndTs         *big.Int
-		TotalDuration *big.Int
-	})
-	if err != nil {
-		return *outstruct, err
-	}
-
-	outstruct.Source = *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
-	outstruct.StartTs = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
-	outstruct.EndTs = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
-	outstruct.TotalDuration = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
-
-	return *outstruct, err
-
-}
-
-// PullFeature is a free data retrieval call binding the contract method 0x4831976c.
-//
-// Solidity: function pullFeature() view returns(address source, uint256 startTs, uint256 endTs, uint256 totalDuration)
-func (_Rewards *RewardsSession) PullFeature() (struct {
-	Source        common.Address
-	StartTs       *big.Int
-	EndTs         *big.Int
-	TotalDuration *big.Int
-}, error) {
-	return _Rewards.Contract.PullFeature(&_Rewards.CallOpts)
-}
-
-// PullFeature is a free data retrieval call binding the contract method 0x4831976c.
-//
-// Solidity: function pullFeature() view returns(address source, uint256 startTs, uint256 endTs, uint256 totalDuration)
-func (_Rewards *RewardsCallerSession) PullFeature() (struct {
-	Source        common.Address
-	StartTs       *big.Int
-	EndTs         *big.Int
-	TotalDuration *big.Int
-}, error) {
-	return _Rewards.Contract.PullFeature(&_Rewards.CallOpts)
-}
-
 // RewardToken is a free data retrieval call binding the contract method 0xf7c618c1.
 //
 // Solidity: function rewardToken() view returns(address)
@@ -511,6 +425,37 @@ func (_Rewards *RewardsSession) RewardToken() (common.Address, error) {
 // Solidity: function rewardToken() view returns(address)
 func (_Rewards *RewardsCallerSession) RewardToken() (common.Address, error) {
 	return _Rewards.Contract.RewardToken(&_Rewards.CallOpts)
+}
+
+// Source is a free data retrieval call binding the contract method 0x67e828bf.
+//
+// Solidity: function source() view returns(address)
+func (_Rewards *RewardsCaller) Source(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Rewards.contract.Call(opts, &out, "source")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// Source is a free data retrieval call binding the contract method 0x67e828bf.
+//
+// Solidity: function source() view returns(address)
+func (_Rewards *RewardsSession) Source() (common.Address, error) {
+	return _Rewards.Contract.Source(&_Rewards.CallOpts)
+}
+
+// Source is a free data retrieval call binding the contract method 0x67e828bf.
+//
+// Solidity: function source() view returns(address)
+func (_Rewards *RewardsCallerSession) Source() (common.Address, error) {
+	return _Rewards.Contract.Source(&_Rewards.CallOpts)
 }
 
 // UserMultiplier is a free data retrieval call binding the contract method 0xb1a03b6b.
@@ -586,6 +531,27 @@ func (_Rewards *RewardsTransactorSession) Claim() (*types.Transaction, error) {
 	return _Rewards.Contract.Claim(&_Rewards.TransactOpts)
 }
 
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Rewards *RewardsTransactor) EmergencyWithdraw(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Rewards.contract.Transact(opts, "emergencyWithdraw")
+}
+
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Rewards *RewardsSession) EmergencyWithdraw() (*types.Transaction, error) {
+	return _Rewards.Contract.EmergencyWithdraw(&_Rewards.TransactOpts)
+}
+
+// EmergencyWithdraw is a paid mutator transaction binding the contract method 0xdb2e21bc.
+//
+// Solidity: function emergencyWithdraw() returns()
+func (_Rewards *RewardsTransactorSession) EmergencyWithdraw() (*types.Transaction, error) {
+	return _Rewards.Contract.EmergencyWithdraw(&_Rewards.TransactOpts)
+}
+
 // RegisterUserAction is a paid mutator transaction binding the contract method 0x66a7d821.
 //
 // Solidity: function registerUserAction(address user) returns()
@@ -628,25 +594,25 @@ func (_Rewards *RewardsTransactorSession) RenounceOwnership() (*types.Transactio
 	return _Rewards.Contract.RenounceOwnership(&_Rewards.TransactOpts)
 }
 
-// SetBarn is a paid mutator transaction binding the contract method 0x3b342a85.
+// SetBarn is a paid mutator transaction binding the contract method 0x305cf08d.
 //
-// Solidity: function setBarn(address _barn) returns()
-func (_Rewards *RewardsTransactor) SetBarn(opts *bind.TransactOpts, _barn common.Address) (*types.Transaction, error) {
-	return _Rewards.contract.Transact(opts, "setBarn", _barn)
+// Solidity: function setBarn(address _barn, uint256 _startTs) returns()
+func (_Rewards *RewardsTransactor) SetBarn(opts *bind.TransactOpts, _barn common.Address, _startTs *big.Int) (*types.Transaction, error) {
+	return _Rewards.contract.Transact(opts, "setBarn", _barn, _startTs)
 }
 
-// SetBarn is a paid mutator transaction binding the contract method 0x3b342a85.
+// SetBarn is a paid mutator transaction binding the contract method 0x305cf08d.
 //
-// Solidity: function setBarn(address _barn) returns()
-func (_Rewards *RewardsSession) SetBarn(_barn common.Address) (*types.Transaction, error) {
-	return _Rewards.Contract.SetBarn(&_Rewards.TransactOpts, _barn)
+// Solidity: function setBarn(address _barn, uint256 _startTs) returns()
+func (_Rewards *RewardsSession) SetBarn(_barn common.Address, _startTs *big.Int) (*types.Transaction, error) {
+	return _Rewards.Contract.SetBarn(&_Rewards.TransactOpts, _barn, _startTs)
 }
 
-// SetBarn is a paid mutator transaction binding the contract method 0x3b342a85.
+// SetBarn is a paid mutator transaction binding the contract method 0x305cf08d.
 //
-// Solidity: function setBarn(address _barn) returns()
-func (_Rewards *RewardsTransactorSession) SetBarn(_barn common.Address) (*types.Transaction, error) {
-	return _Rewards.Contract.SetBarn(&_Rewards.TransactOpts, _barn)
+// Solidity: function setBarn(address _barn, uint256 _startTs) returns()
+func (_Rewards *RewardsTransactorSession) SetBarn(_barn common.Address, _startTs *big.Int) (*types.Transaction, error) {
+	return _Rewards.Contract.SetBarn(&_Rewards.TransactOpts, _barn, _startTs)
 }
 
 // SetNewAPR is a paid mutator transaction binding the contract method 0x5168e544.
@@ -668,27 +634,6 @@ func (_Rewards *RewardsSession) SetNewAPR(_apr *big.Int) (*types.Transaction, er
 // Solidity: function setNewAPR(uint256 _apr) returns()
 func (_Rewards *RewardsTransactorSession) SetNewAPR(_apr *big.Int) (*types.Transaction, error) {
 	return _Rewards.Contract.SetNewAPR(&_Rewards.TransactOpts, _apr)
-}
-
-// SetupPullToken is a paid mutator transaction binding the contract method 0x8a8a6f59.
-//
-// Solidity: function setupPullToken(address source, uint256 startTs, uint256 endTs) returns()
-func (_Rewards *RewardsTransactor) SetupPullToken(opts *bind.TransactOpts, source common.Address, startTs *big.Int, endTs *big.Int) (*types.Transaction, error) {
-	return _Rewards.contract.Transact(opts, "setupPullToken", source, startTs, endTs)
-}
-
-// SetupPullToken is a paid mutator transaction binding the contract method 0x8a8a6f59.
-//
-// Solidity: function setupPullToken(address source, uint256 startTs, uint256 endTs) returns()
-func (_Rewards *RewardsSession) SetupPullToken(source common.Address, startTs *big.Int, endTs *big.Int) (*types.Transaction, error) {
-	return _Rewards.Contract.SetupPullToken(&_Rewards.TransactOpts, source, startTs, endTs)
-}
-
-// SetupPullToken is a paid mutator transaction binding the contract method 0x8a8a6f59.
-//
-// Solidity: function setupPullToken(address source, uint256 startTs, uint256 endTs) returns()
-func (_Rewards *RewardsTransactorSession) SetupPullToken(source common.Address, startTs *big.Int, endTs *big.Int) (*types.Transaction, error) {
-	return _Rewards.Contract.SetupPullToken(&_Rewards.TransactOpts, source, startTs, endTs)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
