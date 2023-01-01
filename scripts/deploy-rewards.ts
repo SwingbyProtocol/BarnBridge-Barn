@@ -1,9 +1,9 @@
 import * as deploy from '../test/helpers/deploy';
 import { ethers } from 'hardhat';
 
-const _bond = '0xFCd51B56e65605C33024A9E98a7aaDfF2e1A15b9';
-const _apr = 10;
-const _cv = '0xb52E4F319D75918B03A3bdd02D20479bF4fa8399';
+const _bond = '0x8287C7b963b405b7B8D467DB9d79eEC40625b13A';
+const _apr = 5;
+const _cv = '0x7Afa809786Cd034525336aFDD45c7f759Dcaa824';
 
 async function main() {
     const [owner] = await ethers.getSigners();
